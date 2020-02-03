@@ -1,0 +1,5 @@
+module.exports.data = require('./data')
+module.exports.fetch = require('./fetch')
+module.exports.patterns = require('./patterns')
+module.exports.scopes = require('./scopes')
+module.exports.automate = require('./automate')
