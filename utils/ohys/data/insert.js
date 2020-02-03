@@ -4,8 +4,7 @@ const patterns = require('../patterns')
 
 module.exports = async items => {
   for (let i = 0; i < items.length; i++) {
-    const [original, title, broadcaster, resolution, audioFormat, videoFormat] = await patterns.title.exec(items[i].name)
-    const [series, episode] = await title.split(' - ')
+    const [original, series, episode, broadcaster, resolution, audioFormat, videoFormat] = await patterns.title.exec(items[i].name)
 
     log(`inserting '${series}' position at ${episode}...`)
 
