@@ -4,9 +4,14 @@ const patterns = require('../patterns')
 
 module.exports = async items => {
   for (let i = 0; i < items.length; i++) {
-    const [original, series, episode, broadcaster, resolution, audioFormat, videoFormat] = await patterns.title.exec(items[i].name)
+    let [original, series, broadcaster, resolution, audioFormat, videoFormat] = await patterns.titleSingleEpisode.exec(items[i].name)
+    let episode = 0
 
-    log(`inserting '${series}' position at ${episode}...`)
+    if (await patterns.title.test(items[i].name)) {
+      [original, series, episode, broadcaster, resolution, audioFormat, videoFormat] = await patterns.title.exec(items[i].name)
+    }
+
+    log(`inserting '${series}' episode ${episode}...`)
 
     await database.knex('animes')
       .insert({
