@@ -16,7 +16,7 @@ module.exports = async opts => {
     const buffer = await request(`https://torrents.ohys.net/t/json.php?dir=disk&q=${opts.query}&p=${opts.page}`)
     const data = await JSON.parse(buffer.slice(1))
 
-    log(`downloaded ${(opts.page * 30) + data.length} torrent info...`)
+    log(`downloaded feed: page ${opts.page}`)
 
     for (let i = 0; i < data.length; i++) {
       await serialized.push({

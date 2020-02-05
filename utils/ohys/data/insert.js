@@ -11,21 +11,21 @@ module.exports = async items => {
       [original, series, episode, broadcaster, resolution, audioFormat, videoFormat] = await patterns.title.exec(items[i].name)
     }
 
-    log(`inserting '${series}' episode ${episode}...`)
+    log(`inserting '${series}' episode ${Number(episode)}...`)
 
     await database.knex('animes')
       .insert({
         id: null,
-        episode,
+        episode: Number(episode),
         series,
         link: items[i].url,
         resolution,
         audioFormat,
         videoFormat,
         broadcaster,
-        original
+        original: items[i].name
       })
   }
 
-  log('successfully done insertion.')
+  log(`successfully inserted ${items.length} item(s).`)
 }

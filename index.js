@@ -13,10 +13,11 @@ const router = new Router()
 
 router.all('/', async ctx => ctx.redirect('https://ohys.seia.io'))
 
+utils.database.autofill()
 utils.routing.autofill(router, functions)
 utils.ohys.automate()
 
 app
   .use(router.routes())
   .use(router.allowedMethods())
-  .listen(config.app.port, () => log(`${pkg.name}@v${pkg.version} is listening at port ${config.host.port}.`))
+  .listen(config.app.port, () => log(`${pkg.name}@v${pkg.version} is listening at port ${config.app.port}.`))

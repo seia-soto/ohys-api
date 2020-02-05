@@ -12,7 +12,7 @@ const autofill = (router, routes, prefix) => {
 
       if (['all', 'post', 'put', 'patch'].includes(routes.method)) {
         // NOTE: <https://specs.openstack.org/openstack/api-wg/guidelines/http/methods.html>
-        router[routes.method](prefix, useBody(config.request.body), routes.fn)
+        router[routes.method](prefix, useBody(config.app.request.body), routes.fn)
       } else {
         router[routes.method](prefix, routes.fn)
       }

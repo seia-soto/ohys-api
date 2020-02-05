@@ -5,28 +5,23 @@ const data = require('./data')
 const fetch = require('./fetch')
 
 module.exports = async () => {
-  const items = await fetch.allList()
-  const itemsUpdated = await database.knex('animes').count('id')
+  const latestFeed = await fetch.allList()
+  const existingFeed = await database.knex('animes').select('*')
 
-  if (!itemsUpdated.length) {
-    await data.insert(items)
-  }
-  if (itemsUpdated < items) {
-    await data.insert(items.slice(0, items - itemsUpdated))
+  if (latestFeed.length > existingFeed.length) {
+    await data.insert(latestFeed.slice(0, latestFeed.length - existingFeed.length))
   }
 
   setInterval(async () => {
-    log(`downloading new feed: ${Date.now()}`)
+    log(`updating database: ${Date.now()}`)
 
-    let itemsCreated = await fetch.list()
+    const latestFeedUpdate = await fetch.list()
+    const existingFeedUpdate = await database.knex('animes').select('*')
 
-    // NOTE: Remove duplicates.
-    itemsCreated = await itemsCreated.filter((item, position) => {
-      const currentItem = JSON.stringify(item)
-
-      return position === itemsCreated.findIndex(_item => currentItem === JSON.stringify(_item))
+    const newItems = await latestFeedUpdate.serialized.filter(item => {
+      return !existingFeedUpdate.find(eItem => eItem.original === item.name)
     })
 
-    await data.insert(itemsCreated)
+    await data.insert(newItems)
   }, config.ohys.refreshRate)
 }

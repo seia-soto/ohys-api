@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "firstrun": "cross-env DEBUG=ohys-api node bin/firstrun.js"
+    "start": "cross-env DEBUG=ohys-api node .",
+    "silent": "node .",
+    "debug": "cross-env DEBUG=* node .",
+    "makecopy": "cross-env DEBUG=ohys-api node bin/makecopy.js",
+    "makecopy-debug": "cross-env DEBUG=* node bin/makecopy.js"
   },
   "keywords": [],
   "author": "Seia-Soto",
@@ -19,7 +23,8 @@
     "koa-router": "^8.0.6",
     "mysql2": "^2.1.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.5"
+    "request-promise": "^4.2.5",
+    "sqlite3": "^4.1.1"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
