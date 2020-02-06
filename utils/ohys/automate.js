@@ -5,11 +5,13 @@ const data = require('./data')
 const fetch = require('./fetch')
 
 module.exports = async () => {
-  const latestFeed = await fetch.allList()
-  const existingFeed = await database.knex('animes').select('*')
+  if (!config.ohys.passUpdateAtStart) {
+    const latestFeed = await fetch.allList()
+    const existingFeed = await database.knex('animes').select('*')
 
-  if (latestFeed.length > existingFeed.length) {
-    await data.insert(latestFeed.slice(0, latestFeed.length - existingFeed.length))
+    if (latestFeed.length > existingFeed.length) {
+      await data.insert(latestFeed.slice(0, latestFeed.length - existingFeed.length))
+    }
   }
 
   setInterval(async () => {

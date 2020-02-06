@@ -5,6 +5,9 @@ module.exports = {
       body: {
         multipart: true
       }
+    },
+    cors: {
+      origin: 'http://localhost:3000'
     }
   },
   database: {
@@ -23,6 +26,7 @@ module.exports = {
     }
   },
   ohys: {
-    refreshRate: 4 * 1000
+    passUpdateAtStart: false,
+    refreshRate: 60 * 1000
   }
 }

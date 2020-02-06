@@ -6,7 +6,7 @@ module.exports = async opts => {
   opts = opts || {}
 
   opts.query = opts.query = ''
-  opts.page = String(opts.page || 1)
+  opts.page = String(opts.page || '0')
 
   delete opts.year
 

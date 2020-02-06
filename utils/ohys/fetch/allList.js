@@ -4,7 +4,7 @@ module.exports = async () => {
   const serialized = []
 
   let lastItemSize = 30
-  let page = 1
+  let page = 0
 
   while (lastItemSize >= 30) {
     const items = await fetchList({
