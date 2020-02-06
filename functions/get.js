@@ -3,10 +3,10 @@ const utils = require('../utils')
 module.exports = {
   method: 'get',
   fn: async ctx => {
-    const startIdx = 25 * Number(ctx.params.page || 0)
+    const endIdx = 25 * Number(ctx.request.query.page || 1)
     const results = await utils.database.knex('animes')
       .select('*')
-      .whereBetween('id', [startIdx, startIdx + 25])
+      .whereBetween('id', [endIdx - 25, endIdx])
 
     ctx.body = await JSON.stringify(results)
   }

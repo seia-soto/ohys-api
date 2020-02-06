@@ -26,7 +26,7 @@ module.exports = {
     }
   },
   ohys: {
-    passUpdateAtStart: false,
+    passUpdateAtStart: true,
     refreshRate: 60 * 1000
   }
 }
