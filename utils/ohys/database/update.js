@@ -16,7 +16,7 @@ const update = async freshly => {
     }
   }
 
-  for (let k = 0; k < latestFeed.serialized.length; k++) {
+  for (let k = latestFeed.serialized.length - 1; k > 0; k--) {
     const item = latestFeed.serialized[k]
     const itemStringified = await JSON.stringify(item)
     const itemHash = await crypto.hash.md5(itemStringified)
