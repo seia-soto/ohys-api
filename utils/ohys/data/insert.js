@@ -1,4 +1,5 @@
 const log = require('../../../log')
+const crypto = require('../../crypto')
 const database = require('../../database')
 const patterns = require('../patterns')
 
@@ -16,6 +17,7 @@ module.exports = async items => {
     await database.knex('animes')
       .insert({
         id: null,
+        hash: await crypto.hash.md5(await JSON.stringify(items[i])),
         episode: Number(episode),
         series,
         link: items[i].url,

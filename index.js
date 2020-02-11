@@ -14,12 +14,16 @@ const router = new Router()
 
 router.all('/', async ctx => ctx.redirect('https://ohys.seia.io'))
 
-utils.database.autofill()
-utils.routing.autofill(router, functions)
-utils.ohys.automate()
+const initFn = async () => {
+  await utils.database.autofill()
+  await utils.routing.autofill(router, functions)
+  utils.ohys.automate()
 
-app
-  .use(cors(config.app.cors))
-  .use(router.routes())
-  .use(router.allowedMethods())
-  .listen(config.app.port, () => log(`${pkg.name}@v${pkg.version} is listening at port ${config.app.port}.`))
+  app
+    .use(cors(config.app.cors))
+    .use(router.routes())
+    .use(router.allowedMethods())
+    .listen(config.app.port, () => log(`${pkg.name}@v${pkg.version} is listening at port ${config.app.port}.`))
+}
+
+initFn()

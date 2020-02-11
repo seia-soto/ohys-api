@@ -1,6 +1,8 @@
 module.exports = async lib => {
   await lib.schema.createTable('animes', table => {
-    table.increments() // NOTE: id int unsigned not null auto_increment primary key
+    table.increments().primary()
+
+    table.string('hash', 32).notNullable()
 
     table.integer('episode').notNullable()
     table.string('series', 256).notNullable()
