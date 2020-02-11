@@ -9,7 +9,8 @@
     "silent": "node .",
     "debug": "cross-env DEBUG=* node .",
     "makecopy": "cross-env DEBUG=ohys-api node bin/makecopy.js",
-    "makecopy-debug": "cross-env DEBUG=* node bin/makecopy.js"
+    "makecopy-debug": "cross-env DEBUG=* node bin/makecopy.js",
+    "resetsql": "sh bin/resetsql.sh"
   },
   "keywords": [],
   "author": "Seia-Soto",
