@@ -17,6 +17,7 @@ router.all('/', async ctx => ctx.redirect('https://ohys.seia.io'))
 const initFn = async () => {
   await utils.database.autofill()
   await utils.routing.autofill(router, functions)
+
   utils.ohys.automate()
 
   app

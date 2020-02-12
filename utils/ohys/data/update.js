@@ -1,10 +1,10 @@
 const crypto = require('../../crypto')
 const database = require('../../database')
-const data = require('../data')
 const fetch = require('../fetch')
-// const scopes = require('../scopes')
+const insert = require('./insert')
 
 const update = async freshly => {
+  const updateQueue = []
   const existingSources = await database.knex('animes')
     .select('*')
 
@@ -16,17 +16,18 @@ const update = async freshly => {
     }
   }
 
-  for (let k = latestFeed.serialized.length - 1; k > 0; k--) {
+  for (let k = latestFeed.serialized.length - 1; k >= 0; k--) {
     const item = latestFeed.serialized[k]
     const itemStringified = await JSON.stringify(item)
     const itemHash = await crypto.hash.md5(itemStringified)
-
     const existingItem = await existingSources.find(item => item.hash === itemHash)
 
     if (!existingItem) {
-      await data.insert([item])
+      await updateQueue.push(item)
     }
   }
+
+  insert(updateQueue)
 }
 
 module.exports = update
