@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "public": true,
+  "builds": [
+    {
+      "use": "@now/node"
+    }
+  ],
+  "build": {
+    "env": {
+      "NODE_ENV": "start"
+    }
+  }
+}

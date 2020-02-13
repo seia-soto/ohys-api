@@ -12,7 +12,7 @@ const log = require('./log')
 const app = new Koa()
 const router = new Router()
 
-router.all('/', async ctx => ctx.redirect('https://ohys.seia.io'))
+router.all('/', async ctx => ctx.redirect('https://ohys.kadantte.moe'))
 
 const initFn = async () => {
   await utils.database.autofill()
