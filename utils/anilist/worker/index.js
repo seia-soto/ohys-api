@@ -1,3 +1,4 @@
+const config = require('../../../config')
 const log = require('../../../log')
 const crypto = require('../../crypto')
 const database = require('../../database')
@@ -71,7 +72,7 @@ class AnilistWorker {
           hash: crypto.hash.md5(data[k].series)
         })
 
-      if (!list.includes(data[k].series) && !existingMeta.length) {
+      if ((!list.includes(data[k].series) && !existingMeta.length) || Date.now() - new Date(existingMeta[0].updated_at) > config.anilist.refreshRate) {
         list.push(data[k].series)
         this.enqueue(data[k].series)
       }

@@ -26,10 +26,10 @@ module.exports = {
     }
   },
   ohys: {
-    passUpdateAtStart: true,
     refreshRate: 30 * 1000
   },
   anilist: {
-    api: 'https://graphql.anilist.co'
+    api: 'https://graphql.anilist.co',
+    refreshRate: 2 * 60 * 60 * 1000
   }
 }
