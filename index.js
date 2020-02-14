@@ -1,10 +1,8 @@
 const Koa = require('koa')
 const Router = require('koa-router')
 const cors = require('@koa/cors')
-
 const functions = require('./functions')
 const utils = require('./utils')
-
 const pkg = require('./package')
 const config = require('./config')
 const log = require('./log')

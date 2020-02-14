@@ -7,7 +7,7 @@ module.exports = {
       }
     },
     cors: {
-      origin: 'http://localhost:3000'
+      origin: 'https://ohys.kadantte.moe'
     }
   },
   database: {

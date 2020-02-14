@@ -4,13 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env DEBUG=ohys-api node .",
-    "silent": "node .",
-    "debug": "cross-env DEBUG=* node .",
-    "makecopy": "cross-env DEBUG=ohys-api node bin/makecopy.js",
-    "makecopy-debug": "cross-env DEBUG=* node bin/makecopy.js",
-    "resetsql": "sh bin/resetsql.sh"
+    "silent": "node ."
   },
   "keywords": [],
   "author": "Seia-Soto",
@@ -19,12 +14,12 @@
     "@koa/cors": "2",
     "cross-env": "^7.0.0",
     "debug": "^4.1.1",
-    "knex": "^0.20.8",
+    "knex": "^0.20.9",
     "koa": "^2.11.0",
     "koa-body": "^4.1.1",
-    "koa-router": "^8.0.6",
+    "koa-router": "^8.0.7",
     "mysql2": "^2.1.0",
-    "request": "^2.88.0",
+    "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "sqlite3": "^4.1.1"
   },
