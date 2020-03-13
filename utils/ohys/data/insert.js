@@ -8,10 +8,23 @@ module.exports = async items => {
   const metaUpdateQueue = []
 
   for (let i = 0; i < items.length; i++) {
-    let [original, series, broadcaster, resolution, audioFormat, videoFormat] = await patterns.titleSingleEpisode.exec(items[i].name)
+    const serializable = {
+      asSingle: await patterns.titleSingleEpisode.test(items[i].name),
+      asEpisode: await patterns.title.test(items[i].name)
+    }
+
+    let original = items[i].name
+    let series = ''
+    let broadcaster = ''
+    let resolution = ''
+    let audioFormat = ''
+    let videoFormat = ''
     let episode = 0
 
-    if (await patterns.title.test(items[i].name)) {
+    if (serializable.asSingle) {
+      [original, series, broadcaster, resolution, audioFormat, videoFormat] = await patterns.titleSingleEpisode.exec(items[i].name)
+    }
+    if (serializable.asEpisode) {
       [original, series, episode, broadcaster, resolution, audioFormat, videoFormat] = await patterns.title.exec(items[i].name)
     }
 
@@ -28,7 +41,7 @@ module.exports = async items => {
         audioFormat,
         videoFormat,
         broadcaster,
-        original: items[i].name
+        original
       })
 
     const existingMeta = await database.knex('series')
