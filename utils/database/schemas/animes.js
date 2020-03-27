@@ -4,7 +4,7 @@ module.exports = async lib => {
 
     table.string('hash', 32).notNullable()
 
-    table.integer('episode').notNullable()
+    table.string('episode', 8).notNullable()
     table.string('series', 256).notNullable()
     table.string('link', 1024).notNullable()
     table.string('resolution', 32).notNullable()
