@@ -22,7 +22,7 @@ module.exports = {
     */
     client: 'sqlite3',
     connection: {
-      filename: './resources/main.sqlite3'
+      filename: './bin/main.db'
     }
   },
   ohys: {

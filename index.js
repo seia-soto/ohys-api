@@ -2,7 +2,7 @@ const Koa = require('koa')
 const Router = require('koa-router')
 const cors = require('@koa/cors')
 
-const functions = require('./functions')
+const routes = require('./routes')
 const utils = require('./utils')
 
 const pkg = require('./package')
@@ -16,7 +16,7 @@ router.all('/', async ctx => ctx.redirect('https://ohys.seia.io'))
 
 const initFn = async () => {
   await utils.database.autofill()
-  await utils.routing.autofill(router, functions)
+  await utils.routing.autofill(router, routes)
 
   utils.ohys.automate()
 
