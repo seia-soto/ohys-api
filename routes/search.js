@@ -17,6 +17,6 @@ module.exports = {
         .orderBy('id', 'desc')
     }
 
-    ctx.body = await JSON.stringify(results)
+    ctx.body = JSON.stringify(results)
   }
 }

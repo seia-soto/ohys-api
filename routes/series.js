@@ -13,6 +13,6 @@ module.exports = {
         })
     }
 
-    ctx.body = await JSON.stringify(results)
+    ctx.body = JSON.stringify(results)
   }
 }

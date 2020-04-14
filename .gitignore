@@ -107,4 +107,4 @@ dist
 .vscode-test
 
 # resource folder
-resources/
+bin/
