@@ -14,7 +14,7 @@ module.exports = async opts => {
     const buffer = await response.text()
     const data = JSON.parse(buffer.slice(1))
 
-    log(`downloaded feed page ${opts.page}`)
+    log(`loading ${data.length} items from page ${opts.page}`)
 
     for (let i = 0; i < data.length; i++) {
       serialized.push({
@@ -27,8 +27,15 @@ module.exports = async opts => {
       data: serialized
     }
   } catch (error) {
-    return {
-      error
+    log(`retrying to load items from page ${opts.page}`)
+    log(error)
+
+    if (opts.retry) {
+      return this(opts)
+    } else {
+      return {
+        error
+      }
     }
   }
 }

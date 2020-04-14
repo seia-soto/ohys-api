@@ -7,10 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env DEBUG=ohys-api node .",
     "silent": "node .",
-    "debug": "cross-env DEBUG=* node .",
-    "makecopy": "cross-env DEBUG=ohys-api node bin/makecopy.js",
-    "makecopy-debug": "cross-env DEBUG=* node bin/makecopy.js",
-    "resetsql": "sh bin/resetsql.sh"
+    "debug": "cross-env DEBUG=* node ."
   },
   "keywords": [],
   "author": "Seia-Soto",
