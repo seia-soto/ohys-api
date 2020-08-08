@@ -1,3 +1,5 @@
+const debug = require('./debug')
+
 module.exports = text => {
   if (typeof text !== 'string' || !text) {
     return {
@@ -51,10 +53,10 @@ module.exports = text => {
 
     return result
   } catch (error) {
-    this.debug('error during parsing title: ' + text)
+    debug('error during parsing title: ' + text)
 
     return {
-      error: 'Unexpected case!'
+      error: 'Unexpected case found while parsing title.'
     }
   }
 }

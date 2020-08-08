@@ -1,5 +1,6 @@
 const fastify = require('fastify')
 
+const api = require('./api')
 const utils = require('./utils')
 const config = require('./config')
 
@@ -7,6 +8,9 @@ const app = fastify({
   logger: true
 })
 const debug = utils.createLogger()
+
+// NOTE: Declare routings
+app.register(api.v1, { prefix: 'v1' })
 
 module.exports = (async () => {
   try {
