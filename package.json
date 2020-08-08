@@ -12,7 +12,8 @@
   "dependencies": {
     "cross-env": "^7.0.2",
     "debug": "^4.1.1",
-    "fastify": "^3.2.0"
+    "fastify": "^3.2.0",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
