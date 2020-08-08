@@ -1,30 +1,18 @@
 {
   "name": "ohys-api",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
+  "repository": "https://github.com/Seia-Soto/ohys-api.git",
+  "author": "Seia-Soto <seia@outlook.kr>",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env DEBUG=ohys-api node .",
-    "silent": "node .",
+    "start": "cross-env DEBUG=ohys* node .",
     "debug": "cross-env DEBUG=* node ."
   },
-  "keywords": [],
-  "author": "Seia-Soto",
-  "license": "MIT",
   "dependencies": {
-    "@koa/cors": "2",
-    "cross-env": "^7.0.0",
+    "cross-env": "^7.0.2",
     "debug": "^4.1.1",
-    "knex": "^0.20.8",
-    "koa": "^2.11.0",
-    "koa-body": "^4.1.1",
-    "koa-router": "^8.0.6",
-    "mysql2": "^2.1.0",
-    "node-fetch": "^2.6.0",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.5",
-    "sqlite3": "^4.1.1"
+    "fastify": "^3.2.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",

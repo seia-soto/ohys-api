@@ -1,30 +1,21 @@
-const Koa = require('koa')
-const Router = require('koa-router')
-const cors = require('@koa/cors')
+const fastify = require('fastify')
 
-const routes = require('./routes')
 const utils = require('./utils')
-
-const pkg = require('./package')
 const config = require('./config')
-const log = require('./log')
 
-const app = new Koa()
-const router = new Router()
+const app = fastify({
+  logger: true
+})
+const debug = utils.createLogger()
 
-router.all('/', async ctx => ctx.redirect('https://ohys.seia.io'))
+module.exports = (async () => {
+  try {
+    await app.listen(config.port)
 
-const initFn = async () => {
-  await utils.database.autofill()
-  await utils.routing.autofill(router, routes)
+    debug('application is listening on port: ' + config.port)
+  } catch (error) {
+    debug('unexpected error occured while starting application: ' + error)
 
-  utils.ohys.automate()
-
-  app
-    .use(cors(config.app.cors))
-    .use(router.routes())
-    .use(router.allowedMethods())
-    .listen(config.app.port, () => log(`${pkg.name}@v${pkg.version} is listening at port ${config.app.port}.`))
-}
-
-initFn()
+    process.exit(1)
+  }
+})()
