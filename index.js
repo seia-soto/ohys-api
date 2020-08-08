@@ -2,6 +2,7 @@ const fastify = require('fastify')
 
 const api = require('./api')
 const utils = require('./utils')
+const worker = require('./worker')
 const config = require('./config')
 
 const app = fastify({
@@ -17,6 +18,9 @@ module.exports = (async () => {
     await app.listen(config.port)
 
     debug('application is listening on port: ' + config.port)
+
+    // NOTE: Initialize worker
+    worker.initialize()
   } catch (error) {
     debug('unexpected error occured while starting application: ' + error)
 
