@@ -4,9 +4,15 @@ module.exports = table => {
     .unique()
 
   table.string('animeName', 256)
-  table.string('episodeName', 256)
   table.integer('episodeNumber', 11)
   table.string('directDownloadLink', 2048)
+  // NOTE: Video metadata
+  table.string('originalFileName', 512)
+  table.string('provider', 32)
+  table.string('channel', 32)
+  table.string('resolution', 16)
+  table.string('audioFormat', 16)
+  table.string('videoFormat', 16)
   // NOTE: Application metadata
   table.datetime('updatedAt')
 }
