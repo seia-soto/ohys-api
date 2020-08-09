@@ -6,5 +6,13 @@ module.exports = payload => {
 
   item.originLink = `${config.ohys.domain}/t/${payload.a}`
 
-  return item
+  return {
+    name: item.series,
+    originalFileName: item.original || '',
+    provider: item.provider || '',
+    channel: item.channel || '',
+    resolution: item.resolution || '',
+    audioFormat: item.audioFormat || '',
+    videoFormat: item.videoFormat || ''
+  }
 }

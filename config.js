@@ -4,6 +4,10 @@ module.exports = {
     domain: 'https://eu.ohys.net',
     endpoints: {
       api: '/t/json.php'
+    },
+    sync: {
+      interval: 5 * 1000,
+      batchQuerySize: 45
     }
   },
   anilist: {
@@ -13,6 +17,7 @@ module.exports = {
     client: 'sqlite3',
     connection: {
       filename: '.data.db'
-    }
+    },
+    useNullAsDefault: true
   }
 }
