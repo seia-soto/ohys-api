@@ -1,3 +1,4 @@
+const debug = require('./debug')
 const getList = require('./getList')
 
 module.exports = async () => {
@@ -6,7 +7,11 @@ module.exports = async () => {
   let page = 0
   let lastResultLength = -1
 
+  debug('getting all file metadata from ohys JSON api')
+
   while (lastResultLength) {
+    debug('downloading metadata at page: ' + page)
+
     const data = await getList({
       page
     })
