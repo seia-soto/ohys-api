@@ -5,5 +5,14 @@ module.exports = {
     endpoints: {
       api: '/t/json.php'
     }
+  },
+  anilist: {
+    api: 'https://graphql.anilist.co'
+  },
+  database: {
+    client: 'sqlite3',
+    connection: {
+      filename: '.data.db'
+    }
   }
 }

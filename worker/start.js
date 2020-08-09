@@ -1,1 +1,2 @@
 // NOTE: TODO
+module.exports = () => {}

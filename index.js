@@ -1,6 +1,7 @@
 const fastify = require('fastify')
 
 const api = require('./api')
+const database = require('./database')
 const utils = require('./utils')
 const worker = require('./worker')
 const config = require('./config')
@@ -15,15 +16,17 @@ app.register(api.v1, { prefix: 'v1' })
 
 module.exports = (async () => {
   try {
+    // NOTE: Tasks before boot
+    await database.createTableIfNotExists()
+    worker.initialize()
+
+    // NOTE: Finally boot-up application
     await app.listen(config.port)
 
     debug('application is listening on port: ' + config.port)
-
-    // NOTE: Initialize worker
-    worker.initialize()
   } catch (error) {
     debug('unexpected error occured while starting application: ' + error)
 
-    process.exit(1)
+    throw error
   }
 })()

@@ -13,7 +13,9 @@
     "cross-env": "^7.0.2",
     "debug": "^4.1.1",
     "fastify": "^3.2.0",
-    "node-fetch": "^2.6.0"
+    "knex": "^0.21.2",
+    "node-fetch": "^2.6.0",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
