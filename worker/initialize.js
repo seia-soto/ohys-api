@@ -13,7 +13,7 @@ module.exports = async () => {
       debug('starting sync automation')
 
       await data.syncAll()
-      // data.syncAutomatic()
+      data.syncAutomatic()
     }
 
     debug('found the environment variable and it was possible to set the workerId, but this process is not the first')
@@ -22,6 +22,6 @@ module.exports = async () => {
     debug('starting sync automation')
     // NOTE: Should enable worker tasks on this process since the process cluter count is 1.
     await data.syncAll()
-    // data.syncAutomatic()
+    data.syncAutomatic()
   }
 }
