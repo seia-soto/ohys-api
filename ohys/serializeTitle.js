@@ -7,7 +7,7 @@ module.exports = text => {
     }
   }
 
-  const expression = /(?:\[([^\r\n\]]*)\][\W]?)?(?:(?:([^\r\n]+?)(?: - ([\d]+?))?)[\W]?[(|[]([^\r\n(]+)? (\d+x\d+|\d{3,}\w)? ([^\r\n]+)?[)\]][^.\r\n]*(?:\.([^\r\n.]*)(?:\.[\w]+)?)?)$/gi
+  const expression = /(?:\[([^\r\n\]]*)\][\W]?)?(?:(?:([^\r\n]+?)(?: - ([\d]+?))?)[\W]?[(|[]([^\r\n(]+)? (\d+x\d+|\d+&\d+|\d{3,}\w)? ([^\r\n]+)?[)\]][^.\r\n]*(?:\.([^\r\n.]*)(?:\.[\w]+)?)?)$/gi
   const result = {}
   const keys = [
     'original',
@@ -29,7 +29,7 @@ module.exports = text => {
     data[3] = data[3] || 'n/a'
     // NOTE: Resolve non-standard `resolution` value.
     if (!/\d+x\d+/g.test(data[5])) {
-      const extract = /(\d{3,})\w/g.exec(data[5])
+      const extract = /(?:x|&)+(\d{3,})/g.exec(data[5])
       const width = Number(extract[1])
 
       if (!isNaN(width)) {
