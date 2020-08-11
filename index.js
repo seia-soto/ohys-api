@@ -1,6 +1,7 @@
 const fastify = require('fastify')
 
 const api = require('./api')
+const assets = require('./assets')
 const database = require('./database')
 const utils = require('./utils')
 const worker = require('./worker')
@@ -18,6 +19,7 @@ module.exports = (async () => {
   try {
     // NOTE: Tasks before boot
     await database.createTableIfNotExists()
+    assets.createIfNotExists()
     worker.initialize()
 
     // NOTE: Finally boot-up application

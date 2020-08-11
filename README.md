@@ -19,6 +19,8 @@ Ohys-API is a project to redistribute the anime metadata of Ohys-Raws.
   - [x] Parse filename and extract basic metadata
 - AniList
   - [x] Get additional anime metadata from AniList
+- Assets (files)
+  - [x] Create data folder if not exists
 - Database
   - [x] Initialize the database on launch
   - [x] Create tables if they don't exist
