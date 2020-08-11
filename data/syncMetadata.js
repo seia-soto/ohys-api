@@ -33,11 +33,10 @@ module.exports = async () => {
 
       for (let i = 0, l = parts.length; i < l; i++) {
         const part = parts[i]
-        const partName = part.name.replace(/ \(\d+\)/gi, '')
 
-        debug('updating metadata for anime: ' + partName)
+        debug('updating metadata for anime: ' + part.name)
 
-        const { data } = await anilist.searchMetadata(partName)
+        const data = await anilist.searchMetadataRecursively(part.name)
         const metadata = data.Page.media[0] || {}
 
         metadata.title = metadata.title || {}
