@@ -33,9 +33,12 @@ module.exports = text => {
       const width = Number(extract[1])
 
       if (!isNaN(width)) {
-        // NOTE: Resolve 3:4 ratio.
         if (width === 480) {
+          // NOTE: Resolve 3:4 ratio.
           data[5] = '640x480'
+        } else if (data[5].includes('&')) {
+          // NOTE: Resolve multiple resolution values.
+          data[5] = data[5].split('&').join(';')
         } else {
           // NOTE: Automatic calcutation of 16:9 ratio.
           data[5] = `${Math.floor(width / 9 * 16)}x${width}`
