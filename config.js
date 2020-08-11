@@ -11,7 +11,10 @@ module.exports = {
     }
   },
   anilist: {
-    api: 'https://graphql.anilist.co'
+    api: 'https://graphql.anilist.co',
+    sync: {
+      interval: 3 * 60 * 60 * 1000
+    }
   },
   database: {
     client: 'sqlite3',

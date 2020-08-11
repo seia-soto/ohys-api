@@ -7,7 +7,7 @@ module.exports = async title => {
   const query = `
 query ($id: Int, $page: Int, $perPage: Int, $search: String) {
   Page (page: $page, perPage: $perPage) {
-    media (id: $id, search: $search) {
+    media (id: $id, search: $search, type: ANIME) {
       id
       idMal
       startDate {
@@ -20,6 +20,7 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
         month
         day
       }
+      description
       season
       seasonYear
       type
@@ -36,6 +37,9 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
         romaji
         english
         native
+      }
+      coverImage {
+        extraLarge
       }
     }
   }

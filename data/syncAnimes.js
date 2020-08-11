@@ -17,9 +17,11 @@ module.exports = async animes => {
     const item = ohys.serializeData(animes[i])
 
     if (!syncedAnimeTitles.includes(item.series)) {
+      syncedAnimeTitles.push(item.series)
       unsyncedAnimes.push({
         name: item.series,
-        updatedAt: new Date()
+        createdAt: new Date(),
+        updatedAt: 0
       })
     }
   }

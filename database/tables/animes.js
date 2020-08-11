@@ -5,6 +5,8 @@ module.exports = table => {
 
   table.string('name', 256)
   table.string('japaneseName', 256)
+  table.string('englishName', 256)
+  table.string('description', 4096)
   table.datetime('releasedAt')
   table.string('season', 16)
   table.string('genres', 2048)
@@ -18,5 +20,6 @@ module.exports = table => {
   table.integer('anilistId', 11)
   table.integer('myanimelistId', 11)
   // NOTE: Application metadata
-  table.datetime('updatedAt')
+  table.datetime('createdAt') // NOTE: When this anime entry created. (registered)
+  table.datetime('updatedAt') // NOTE: When this anime entry's metadata updated. (metadata scraped)
 }

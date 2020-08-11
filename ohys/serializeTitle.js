@@ -7,7 +7,7 @@ module.exports = text => {
     }
   }
 
-  const expression = /(?:\[([^\r\n\]]*)\][\W]?)?(?:(?:([^\r\n]+?)(?: - ([\d]+?))?)[\W]?[(|[]([^\r\n(]+)? (\d+x\d+|\d+&\d+|\d{3,}\w)? ([^\r\n]+)?[)\]][^.\r\n]*(?:\.([^\r\n.]*)(?:\.[\w]+)?)?)$/gi
+  const expression = /(?:\[([^\r\n\]]*)\][\W]?)?(?:(?:([^\r\n]+?)(?: - ([\d]+?)(?: END)?)?)[\W]?[(|[]([^\r\n(]+)? (\d+x\d+|\d+&\d+)? ([^\r\n]+)?[)\]][^.\r\n]*(?:\.([^\r\n.]*)(?:\.[\w]+)?)?)$/gi
   const result = {}
   const keys = [
     'original',
@@ -38,10 +38,17 @@ module.exports = text => {
           data[5] = '640x480'
         } else if (data[5].includes('&')) {
           // NOTE: Resolve multiple resolution values.
-          data[5] = data[5].split('&').join(';')
+          const heights = data[5].split('&')
+          const res = []
+
+          for (let i = 0, l = heights.length; i < l; i++) {
+            res.push(`${heights[i]}x${Math.floor(heights[i] / 9 * 16)}`)
+          }
+
+          data[5] = res.join(';')
         } else {
           // NOTE: Automatic calcutation of 16:9 ratio.
-          data[5] = `${Math.floor(width / 9 * 16)}x${width}`
+          data[5] = `${Math.floor((width / 16) * 9)}x${width}`
         }
       }
     }

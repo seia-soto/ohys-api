@@ -29,7 +29,7 @@ Ohys-API is a project to redistribute the anime metadata of Ohys-Raws.
   - [x] Use PM2 as default process manager
   - [x] Find unsynced anime metadata from database
   - [x] Find unsynced episode metadata from database
-  - [ ] Update anime metadata automatically
+  - [x] Update anime metadata automatically
 - Torrent
   - [ ] Generate direct magnet link to the torrent
   - [ ] Parse additional torrent metadata
@@ -44,6 +44,10 @@ Ohys-API is a project to redistribute the anime metadata of Ohys-Raws.
 
 - [ ] Use or integrate GQL interface instead of old REST interface
 - [ ] Use multiple worker process to speed up scraping
+
+## @FIX
+
+- [ ] Fix duplicated entries in *animes* table
 
 # Scripts
 
