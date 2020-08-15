@@ -1,4 +1,5 @@
 const data = require('../data')
+const config = require('../config')
 const debug = require('./debug')
 
 module.exports = async () => {
@@ -12,7 +13,10 @@ module.exports = async () => {
     if (workerId === '0') {
       debug('starting sync automation')
 
-      await data.syncAll()
+      if (!config.ohys.sync.skipFirstTimeEnsurement) {
+        await data.syncAll()
+      }
+
       data.syncAutomatic()
     }
 
@@ -21,7 +25,10 @@ module.exports = async () => {
     debug('cannot retrieve the environment variable and set the workerId for this proceses')
     debug('starting sync automation')
     // NOTE: Should enable worker tasks on this process since the process cluter count is 1.
-    await data.syncAll()
+    if (!config.ohys.sync.skipFirstTimeEnsurement) {
+      await data.syncAll()
+    }
+
     data.syncAutomatic()
   }
 }

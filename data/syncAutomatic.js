@@ -16,7 +16,7 @@ const sync = async interval => {
 
     await syncAll(animes)
 
-    if (!interval || !(interval % (config.anilist.sync.interval / config.ohys.sync.interval))) {
+    if (config.ohys.sync.animeMetadata && (!interval || !(interval % (config.anilist.sync.interval / config.ohys.sync.interval)))) {
       syncMetadata()
 
       interval = 0

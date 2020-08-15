@@ -107,4 +107,4 @@ dist
 .vscode-test
 
 # resource folder
-.data.db
+.assets

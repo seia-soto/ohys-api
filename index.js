@@ -18,8 +18,8 @@ app.register(api.v1, { prefix: 'v1' })
 module.exports = (async () => {
   try {
     // NOTE: Tasks before boot
-    await database.createTableIfNotExists()
     assets.createIfNotExists()
+    await database.createTableIfNotExists()
     worker.initialize()
 
     // NOTE: Finally boot-up application

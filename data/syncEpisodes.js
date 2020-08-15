@@ -4,7 +4,7 @@ const config = require('../config')
 const debug = require('./debug')
 
 module.exports = async animes => {
-  const syncedEpisodes = await database.knex('episodes')
+  const syncedEpisodes = await database.knex('entries')
     .select('directDownloadLink')
     .limit(animes.length)
   const unsyncedEpisodes = []
@@ -27,7 +27,7 @@ module.exports = async animes => {
         resolution: item.resolution,
         audioFormat: item.audioFormat,
         videoFormat: item.videoFormat,
-        updatedAt: new Date()
+        createdAt: new Date()
       })
     }
   }
@@ -45,6 +45,8 @@ module.exports = async animes => {
 
     await database.knex
       .insert(unsyncedEpisodes.slice(i, iter))
-      .into('episodes')
+      .into('entries')
   }
+
+  return unsyncedEpisodes
 }

@@ -7,7 +7,10 @@ module.exports = {
     },
     sync: {
       interval: 5 * 1000,
-      batchQuerySize: 45
+      batchQuerySize: 45,
+      skipFirstTimeEnsurement: true,
+      torrentMetadata: false, // NOTE: Not-supported yet.
+      animeMetadata: true
     }
   },
   anilist: {
@@ -19,7 +22,7 @@ module.exports = {
   database: {
     client: 'sqlite3',
     connection: {
-      filename: '.data.db'
+      filename: '.assets/.data.db'
     },
     useNullAsDefault: true
   }

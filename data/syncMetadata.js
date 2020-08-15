@@ -7,6 +7,8 @@ const queue = []
 let isWorking = 0
 
 module.exports = async () => {
+  if (!config.ohys.sync.animeMetadata) return
+
   debug('finding anime entries whose metadata is unsynced yet')
 
   const animes = await database.knex('animes')

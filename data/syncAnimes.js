@@ -41,4 +41,6 @@ module.exports = async animes => {
       .insert(unsyncedAnimes.slice(i, iter))
       .into('animes')
   }
+
+  return unsyncedAnimes
 }

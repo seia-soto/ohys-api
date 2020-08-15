@@ -50,6 +50,7 @@ Ohys-API is a project to redistribute the anime metadata of Ohys-Raws.
 ## @FIX
 
 - [ ] Fix duplicated entries in *animes* table
+- [ ] Fix `Error: Invalid data: Missing delimiter ":" [0x3a]` error of node-bencode module **(finding any resolutions)**
 
 # Scripts
 
