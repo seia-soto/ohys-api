@@ -1,7 +1,8 @@
-const healthCheck = require('./healthCheck')
+const animes = require('./animes')
 
 module.exports = (app, opts, done) => {
-  app.get('/healthCheck', healthCheck)
+  app.get('/animes/list', animes.list)
+  app.get('/animes/metadata', animes.metadata)
 
   done()
 }

@@ -8,7 +8,7 @@ module.exports = {
     sync: {
       interval: 5 * 1000,
       batchQuerySize: 45,
-      skipFirstTimeEnsurement: true,
+      skipFirstTimeEnsurement: false,
       torrentMetadata: false, // NOTE: Not-supported yet.
       animeMetadata: true
     }
