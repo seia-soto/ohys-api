@@ -39,7 +39,6 @@ Ohys-API is a project to redistribute the anime metadata of Ohys-Raws.
   - [ ] Get the file tree data from GitHub
   - [ ] Parse the schedule file data from GitHub (success)
 - API
-  - [ ] Add self health checking logic
   - [x] Split the route via version instead of using domain
 
 ## @NEXT
@@ -49,7 +48,7 @@ Ohys-API is a project to redistribute the anime metadata of Ohys-Raws.
 
 ## @FIX
 
-- [ ] Fix duplicated entries in *animes* table
+- [x] Fix duplicated entries in *animes* table
 - [ ] Fix `Error: Invalid data: Missing delimiter ":" [0x3a]` error of node-bencode module **(finding any resolutions)**
 
 # Scripts
