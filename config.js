@@ -6,7 +6,7 @@ module.exports = {
       api: '/t/json.php'
     },
     sync: {
-      interval: 5 * 1000,
+      interval: 30 * 1000,
       batchQuerySize: 45,
       skipFirstTimeEnsurement: false,
       torrentMetadata: true,

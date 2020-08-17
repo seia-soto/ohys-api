@@ -93,8 +93,7 @@ module.exports = async () => {
       }
     }
   } catch (error) {
-    // NOTE: Clost function safely.
-    queue.splice(0, queue.length)
+    // NOTE: Close function safely.
     isWorking = 0
 
     throw error
