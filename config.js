@@ -9,7 +9,8 @@ module.exports = {
       interval: 5 * 1000,
       batchQuerySize: 45,
       skipFirstTimeEnsurement: false,
-      torrentMetadata: false, // NOTE: Not-supported yet.
+      torrentMetadata: true,
+      saveTorrentFiles: true,
       animeMetadata: true
     }
   },

@@ -3,18 +3,18 @@ const fs = require('fs')
 const debug = require('./debug')
 const getWorkspace = require('./getWorkspace')
 
-module.exports = () => {
-  const workspace = getWorkspace()
+module.exports = path => {
+  path = path || getWorkspace()
 
-  if (!fs.existsSync(workspace)) {
+  if (!fs.existsSync(path)) {
     debug('creating data directory because it does not exists')
 
-    fs.mkdirSync(workspace)
+    fs.mkdirSync(path)
   } else {
-    if (!fs.lstatSync(workspace).isDirectory()) {
+    if (!fs.lstatSync(path).isDirectory()) {
       debug('creating data directory because it does not exists')
 
-      fs.mkdirSync(workspace)
+      fs.mkdirSync(path)
     }
   }
 }

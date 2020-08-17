@@ -1,7 +1,12 @@
 const fetch = require('node-fetch')
+const fs = require('fs')
+const path = require('path')
 const parseTorrent = require('parse-torrent')
 
+const assets = require('../assets')
 const database = require('../database')
+const ohys = require('../ohys')
+const utils = require('../utils')
 const config = require('../config')
 const debug = require('./debug')
 
@@ -15,7 +20,7 @@ module.exports = async () => {
 
   const animes = await database.knex('entries')
     .select('id', 'directDownloadLink')
-    .whereNull('torrentInfoHash')
+    .whereNull('updatedAt')
 
   debug(`found unsynced ${animes.length} items from database and filtering duplicated items`)
 
@@ -37,20 +42,26 @@ module.exports = async () => {
 
       for (let i = 0, l = parts.length; i < l; i++) {
         try {
-          debug('downloading torrent from: ' + parts[i].directDownloadLink)
+          const directDownloadLink = ohys.completeDownloadLinkDynamically(parts[i].directDownloadLink)
+          const dirpath = path.join(assets.getWorkspace(), 'torrents')
+          const filepath = path.join(dirpath, decodeURIComponent(utils.getFilenameFromURL(directDownloadLink)))
 
-          const buffer = []
-          const res = await fetch(parts[i].directDownloadLink)
+          assets.createIfNotExists(dirpath)
+
+          debug('downloading torrent from: ' + directDownloadLink)
+
+          const res = await fetch(directDownloadLink)
 
           await new Promise((resolve, reject) => {
-            res.body
-              .on('data', data => buffer.push(data))
-              .on('close', () => resolve())
+            const fileStream = fs.createWriteStream(filepath)
+
+            res.body.pipe(fileStream)
+            fileStream.on('finish', () => resolve())
           })
 
           debug('parsing torrent info of downloaded torrent')
 
-          const torrent = parseTorrent(Buffer.from(buffer))
+          const torrent = parseTorrent(fs.readFileSync(filepath))
           const magnetLink = parseTorrent.toMagnetURI(torrent)
 
           if (!torrent.length) continue
@@ -62,11 +73,18 @@ module.exports = async () => {
               isTorrentPrivate: torrent.private,
               torrentCreatedAt: torrent.created,
               torrentComment: torrent.comment,
-              torrentAnnonces: torrent.annonce.join(';')
+              torrentAnnonces: torrent.announce.join(';'),
+              updatedAt: new Date()
             })
             .where({
               id: parts[i].id
             })
+
+          if (!config.ohys.sync.saveTorrentFiles) {
+            debug('deleting parsed torrent file')
+
+            fs.unlinkSync(filepath)
+          }
         } catch (error) {
           debug('failed to parse current torrent due to following error: ' + error)
 

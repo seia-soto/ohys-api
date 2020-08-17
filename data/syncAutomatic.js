@@ -2,11 +2,8 @@ const ohys = require('../ohys')
 const config = require('../config')
 const debug = require('./debug')
 const syncAll = require('./syncAll')
-const syncMetadata = require('./syncMetadata')
 
-const sync = async interval => {
-  interval = interval || 0
-
+const sync = async () => {
   const startTime = Date.now()
 
   try {
@@ -15,12 +12,6 @@ const sync = async interval => {
     })
 
     await syncAll(animes)
-
-    if (config.ohys.sync.animeMetadata && (!interval || !(interval % (config.anilist.sync.interval / config.ohys.sync.interval)))) {
-      syncMetadata()
-
-      interval = 0
-    }
   } catch (error) {
     debug('met unexpected error while running sync scripts: ' + error)
   }
@@ -32,7 +23,7 @@ const sync = async interval => {
     nextTime = 0
   }
 
-  setTimeout(() => sync(++interval), nextTime)
+  setTimeout(() => sync(), nextTime)
 }
 
 module.exports = sync
