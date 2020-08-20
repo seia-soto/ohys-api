@@ -18,7 +18,7 @@ module.exports = async (request, reply) => {
     .orderBy('id', 'desc')
   const list = await database.knex('entries')
     .select('*')
-    .where('id', '>', lastId - (page * 30))
+    .whereBetween('id', [lastId - (page * 30), lastId - ((page - 1) * 30)])
     .limit(30)
     .orderBy('id', 'desc')
 
