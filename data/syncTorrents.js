@@ -86,7 +86,15 @@ module.exports = async () => {
             fs.unlinkSync(filepath)
           }
         } catch (error) {
-          debug('failed to parse current torrent due to following error: ' + error)
+          debug('failed to parse current torrent due to following error and marking as parse failed: ' + error)
+
+          await database.knex('entries')
+            .update({
+              updatedAt: new Date()
+            })
+            .where({
+              id: parts[i].id
+            })
 
           continue
         }
