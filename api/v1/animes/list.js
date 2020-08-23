@@ -22,5 +22,5 @@ module.exports = async (request, reply) => {
     .limit(30)
     .orderBy('id', 'desc')
 
-  return ohys.completeDownloadLinkDynamically(list)
+  reply.send(ohys.completeDownloadLinkDynamically(list))
 }

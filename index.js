@@ -1,4 +1,5 @@
 const fastify = require('fastify')
+const fastifyCors = require('fastify-cors')
 
 const api = require('./api')
 const assets = require('./assets')
@@ -8,11 +9,14 @@ const worker = require('./worker')
 const config = require('./config')
 
 const app = fastify({
-  logger: true
+  trustProxy: true
 })
 const debug = utils.createLogger()
 
 // NOTE: Declare routings
+app.register(fastifyCors, {
+  origin: true
+})
 app.register(api.v1, { prefix: 'v1' })
 
 module.exports = (async () => {

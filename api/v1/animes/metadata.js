@@ -19,5 +19,5 @@ module.exports = async (request, reply) => {
 
   data.episodes = ohys.completeDownloadLinkDynamically(episodes)
 
-  return data
+  reply.send(data)
 }
