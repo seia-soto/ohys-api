@@ -4,6 +4,7 @@ module.exports = table => {
     .unique()
 
   table.string('name', 256)
+    .unique()
   table.string('japaneseName', 256)
   table.string('englishName', 256)
   table.string('description', 4096)

@@ -6,6 +6,7 @@ module.exports = table => {
   table.string('animeName', 256)
   table.string('episodeNumber', 16)
   table.string('directDownloadLink', 2048)
+    .unique()
   // NOTE: Video metadata
   table.string('originalFileName', 512)
   table.string('provider', 32)
