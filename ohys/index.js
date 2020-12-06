@@ -1,8 +1,0 @@
-module.exports.completeDownloadLink = require('./completeDownloadLink')
-module.exports.completeDownloadLinkDynamically = require('./completeDownloadLinkDynamically')
-module.exports.debug = require('./debug')
-module.exports.getAllList = require('./getAllList')
-module.exports.getEndpoint = require('./getEndpoint')
-module.exports.getList = require('./getList')
-module.exports.serializeData = require('./serializeData')
-module.exports.serializeTitle = require('./serializeTitle')

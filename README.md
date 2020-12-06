@@ -14,33 +14,7 @@ Ohys-API is a project to redistribute the anime metadata of Ohys-Raws.
 
 # TODO
 
-- Ohys-Raws
-  - [x] Scrap its JSON api
-  - [x] Parse filename and extract basic metadata
-- AniList
-  - [x] Get additional anime metadata from AniList
-- Assets (files)
-  - [x] Create data folder if not exists
-- Database
-  - [x] Initialize the database on launch
-  - [x] Create tables if they don't exist
-  - [x] Define schemas
-- Worker
-  - [x] Check if the environment of process is clustered
-  - [x] Determine if current process is worker process
-  - [x] Use PM2 as default process manager
-  - [x] Find unsynced anime metadata from database
-  - [x] Find unsynced episode metadata from database
-  - [x] Find unsynced torrent metadata from database
-  - [x] Update anime metadata automatically
-- Torrent
-  - [x] Generate direct magnet link to the torrent
-  - [x] Parse additional torrent metadata
-- Schedule
-  - [ ] Get the file tree data from GitHub
-  - [ ] Parse the schedule file data from GitHub (success)
-- API
-  - [x] Split the route via version instead of using domain
+Refactoring the project...
 
 ## @NEXT
 
