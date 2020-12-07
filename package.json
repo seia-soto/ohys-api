@@ -6,12 +6,14 @@
   "author": "Seia-Soto <seia@outlook.kr>",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env DEBUG=ohys* node .",
-    "debug": "cross-env DEBUG=* node ."
+    "start": "cross-env DEBUG=ohys* node scripts/start",
+    "debug": "cross-env DEBUG=* node scripts/start"
   },
   "dependencies": {
     "cross-env": "^7.0.2",
     "debug": "^4.1.1",
+    "knex": "^0.21.12",
+    "mysql2": "^2.2.5",
     "node-fetch": "^2.6.1",
     "qs": "^6.9.4"
   },
@@ -21,6 +23,7 @@
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.0.1",
+    "sqlite3": "^5.0.0"
   }
 }
