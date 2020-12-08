@@ -9,4 +9,6 @@ module.exports = table => {
   table.string('description', 8192)
   table.string('broadcaster', 512)
   table.datetime('airingTime')
+
+  return table
 }

@@ -2,11 +2,12 @@ module.exports = table => {
   table.increments()
 
   // NOTE: api specification;
-  table.string('language', 2)
   table.integer('animeId')
 
   // NOTE: metadata;
-  table.string('title', 1024)
-  table.string('description', 8192)
-  table.string('broadcaster', 512)
+  table.float('number')
+  table.string('filename', 2048)
+  table.string('url', 4096)
+
+  return table
 }
