@@ -1,9 +1,9 @@
 process.env.DEBUG = '*'
 
-const getSchedule = require('./getSchedule')
+const getSchedule = require('./getScheduleCompatible')
 
 getSchedule({
-  year: 2020,
-  quarter: 4
+  year: 2017,
+  quarter: 2
 })
   .then(result => console.log(result))

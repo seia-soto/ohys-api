@@ -54,7 +54,7 @@ module.exports = async (opts = {}) => {
         const [data, name, comment] = args
         let altName
 
-        if (!name.match(/[a-zA-Z]/)) {
+        if (!name.match(/[a-zA-Z가-힣一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤]/)) {
           debug('finding next field because current title does not have any alphabet')
 
           try {
