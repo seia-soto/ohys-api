@@ -6,52 +6,12 @@ Ohys-API is a project to redistribute the anime metadata of Ohys-Raws.
 
 ## Table of Contents
 
-- [TODO](#TODO)
 - [Scripts](#scripts)
 - [Development](#development)
+  - [Environment](#environment)
+  - [API](#api) (as module)
 
 ----
-
-# TODO
-
-- Ohys-Raws
-  - [x] Scrap its JSON api
-  - [x] Parse filename and extract basic metadata
-- AniList
-  - [x] Get additional anime metadata from AniList
-- Assets (files)
-  - [x] Create data folder if not exists
-- Database
-  - [x] Initialize the database on launch
-  - [x] Create tables if they don't exist
-  - [x] Define schemas
-- Worker
-  - [x] Check if the environment of process is clustered
-  - [x] Determine if current process is worker process
-  - [x] Use PM2 as default process manager
-  - [x] Find unsynced anime metadata from database
-  - [x] Find unsynced episode metadata from database
-  - [x] Find unsynced torrent metadata from database
-  - [x] Update anime metadata automatically
-- Torrent
-  - [x] Generate direct magnet link to the torrent
-  - [x] Parse additional torrent metadata
-- Schedule
-  - [ ] Get the file tree data from GitHub
-  - [ ] Parse the schedule file data from GitHub (success)
-- API
-  - [x] Split the route via version instead of using domain
-
-## @NEXT
-
-- [ ] Use or integrate GQL interface instead of old REST interface
-- [ ] Use multiple worker process to speed up scraping
-
-## @FIX
-
-- [x] Fix duplicated entries in *animes* table
-- [x] Fix `Error: Invalid data: Missing delimiter ":" [0x3a]` error of node-bencode module **(finding any resolutions)**
-- [ ] Fix unexpected stop of torrent crawling worker
 
 # Scripts
 
@@ -68,3 +28,97 @@ Start the application with logging all messages even from deps.
 ## Environment
 
 Current application has been developed with Node.JS v14.5.0 and Yarnpkg v1.22.4.
+
+# API
+
+Also, you can install this project as your application's dependency and use functions.
+
+```bash
+# Install;
+yarn add Seia-Soto/ohys-api
+npm i git+https://github.com/Seia-Soto/ohys-api.git
+```
+
+```js
+const { ohys } = require('Seia-Soto/ohys-api')
+```
+
+## ohys
+
+### getFeed
+
+Query Ohys JSON API.
+
+```js
+const { getFeed } = ohys
+
+getFeed({
+  page: 0,
+  search: '',
+  prettify: true // NOTE: This will patch the download url to full url.
+})
+  .then(data => {
+    console.log(data)
+
+/*
+[
+  // raw
+  {
+    t,
+    a
+  },
+  // prettified
+  {
+    name: '...',
+    link: 'https://eu.ohys.net/t/...'
+  }
+]
+*/
+  })
+```
+
+### getSchedule
+
+Query the schedule file in modern format with fast search logic of title.
+
+> **Warning**
+> This method will only parse the schedule format in 2020 or later.
+
+> **Warning**
+> The schedule is not always able to parse if something change.
+
+```js
+const { getSchedule } = ohys
+
+getSchedule({
+  year: 2020,
+  quarter: 1,
+  repo: 'ohyongslck/annie',
+  branch: 'master'
+})
+  .then(data => {
+    console.log(data)
+
+/*
+[
+  {
+    year: 2020,
+    quarter: 1,
+    day: 0,
+    name: '...',
+    comment: '...',
+    original: '...'
+  }
+]
+*/
+  })
+```
+
+### getScheduleCompatible
+
+Query the schedule file with heuristic search logic of title which can even parse 2019 or earlier, but this logic is slower than `getSchedule`.
+
+> **Warning**
+> The schedule is not always able to parse if something change.
+
+- The usage is same.

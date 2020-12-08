@@ -1,7 +1,0 @@
-module.exports.debug = require('./debug')
-module.exports.syncAll = require('./syncAll')
-module.exports.syncAnimes = require('./syncAnimes')
-module.exports.syncAutomatic = require('./syncAutomatic')
-module.exports.syncEpisodes = require('./syncEpisodes')
-module.exports.syncMetadata = require('./syncMetadata')
-module.exports.syncTorrents = require('./syncTorrents')

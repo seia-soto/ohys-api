@@ -106,5 +106,6 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# resource folder
-.assets
+# Ohys-API
+config.js
+.data
