@@ -4,9 +4,9 @@ const { name, version } = require('../../package.json')
 const debug = require('./debug')
 
 const days = [
-  '월', '화', '수', '목', '금', '토', '일',
-  '月', '火', '水', '木', '金', '土', '日',
-  'MON', 'TUE', 'WED', 'THU', 'FRI', 'SUN'
+  '월', '화', '수', '목', '금', '토', '일', 'SP',
+  '月', '火', '水', '木', '金', '土', '日', 'SP',
+  'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN', 'SP'
 ]
 const dividers = [
   '/', '[', ']'

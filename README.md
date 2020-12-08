@@ -104,7 +104,7 @@ getSchedule({
   {
     year: 2020,
     quarter: 1,
-    day: 0,
+    day: 0, // NOTE: '7' is special.
     name: '...',
     comment: '...',
     original: '...'
