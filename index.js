@@ -1,1 +1,7 @@
-module.exports = require('./structures')
+const {
+  ohys
+} = require('./structures')
+
+module.exports = {
+  ohys
+}
