@@ -1,6 +1,12 @@
 process.env.DEBUG = '*'
 
+const search = require('./search')
 const profile = require('./profile')
 
-profile('/series/the-journey-of-elaina')
-  .then(result => console.log(result))
+search({
+  tvdb: {
+    query: 'Majo no Tabitabi'
+  }
+})
+  .then(result => profile(result.results[0].hits[0].url))
+  .then(profiled => console.log(profiled))

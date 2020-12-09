@@ -1,14 +1,10 @@
+const actions = require('../actions')
 const { knex } = require('../database')
 const ohys = require('../ohys')
-const tvdb = require('../tvdb')
 const { createLogger } = require('../utils')
 
 const debug = createLogger('tasks/updateSchedule')
 let isTaskActive = 0
-
-const dayFilter = [
-  'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'
-]
 
 module.exports = async () => {
   if (isTaskActive) {
@@ -67,83 +63,16 @@ module.exports = async () => {
 
       // NOTE: loop scheduled items;
       for (let j = 0, s = schedule.length; j < s; j++) {
-        debug('querying metadata of:', schedule[j].name)
+        const metadata = await actions.anime.query(schedule[j].name)
 
-        const searchResult = await tvdb.search({
-          tvdb: {
-            query: schedule[j].name
-          }
-        })
-          .catch(error => debug('error while querying metadata:', error))
-
-        if (!(searchResult && searchResult.results && searchResult.results[0].hits.length)) {
-          debug('metadata not found, skipping')
-
-          continue
-        }
-
-        const metadata = searchResult.results[0].hits[0]
-
-        // NOTE: get profiles;
-        const profile = await tvdb.profile(metadata.url)
-          .catch(error => debug('error while profiling tvdb url:', error))
-
-        if (!profile) {
-          debug('profiling failed, skipping')
-
-          continue
-        }
+        if (!metadata) continue
 
         // NOTE: grab `animeId`;
         let id = existing.items[metadata.name]
 
         // NOTE: insert new anime object when not found;
         if (!id) {
-          const airingTime = profile.airs[0].split('at ')[1].split(':')
-
-          if (airingTime[1].slice(2) === 'pm') {
-            airingTime[0] = Number(airingTime[0]) + 12
-          }
-
-          airingTime[1] = airingTime[1].slice(0, 2)
-
-          // NOTE: prevent ESlint error by not using literal;
-          id = await knex('anime')
-            .returning('id') // NOTE: return `animeId` for future relations;
-            .insert({
-              title: metadata.name,
-              broadcaster: metadata.network,
-              status: metadata.status.toLowerCase(),
-              release: metadata.first_aired || '1995-12-4',
-              genres: profile.genres.map(genres => Buffer.from(genres).toString('base64')).join(';'),
-              airingDay: dayFilter.indexOf(profile.airs[0].slice(0, 3).toLowerCase()),
-              airingTime: `${airingTime[0]}:${airingTime[1]}`
-            })
-            .catch(error => debug('error while inserting metadata into database:', error))
-
-          // NOTE: get first row from results;
-          id = id[0]
-
-          debug('updating details:', metadata.title)
-
-          const titleLanguages = Object.keys(metadata.translations || {})
-          const detailed = []
-
-          // NOTE: loop translations;
-          for (let n = 0, z = titleLanguages.length; n < z; n++) {
-            const language = titleLanguages[n]
-
-            detailed.push({
-              animeId: id,
-              language: language.slice(0, 2), // NOTE: normalize language code into two chars;
-              title: metadata.translations[language],
-              description: metadata.overviews[language] || ''
-            })
-          }
-
-          await knex('anime_details')
-            .insert(detailed)
-            .catch(error => debug('error while inserting detailed metadata into database:', error))
+          id = await actions.anime.add(metadata)
         }
         // NOTE: insert new schedule object when not found;
         if (existing.schedules.indexOf(id) < 0) {
@@ -157,9 +86,6 @@ module.exports = async () => {
             })
             .catch(error => debug('error while inserting schedule information:', error))
         }
-
-        // NOTE: first batch end;
-        process.exit(0)
       }
     }
   }
