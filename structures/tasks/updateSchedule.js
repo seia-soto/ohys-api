@@ -6,6 +6,10 @@ const { createLogger } = require('../utils')
 const debug = createLogger('tasks/updateSchedule')
 let isTaskActive = 0
 
+const dayFilter = [
+  'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'
+]
+
 module.exports = async () => {
   if (isTaskActive) {
     debug('function is already running from another call stack')
@@ -65,43 +69,60 @@ module.exports = async () => {
       for (let j = 0, s = schedule.length; j < s; j++) {
         debug('querying metadata of:', schedule[j].name)
 
-        const data = await tvdb.search({
+        const searchResult = await tvdb.search({
           tvdb: {
             query: schedule[j].name
           }
         })
           .catch(error => debug('error while querying metadata:', error))
 
-        if (!(data && data.results && data.results[0].hits.length)) {
+        if (!(searchResult && searchResult.results && searchResult.results[0].hits.length)) {
           debug('metadata not found, skipping')
 
           continue
         }
 
-        const metadata = data.results[0].hits[0]
+        const metadata = searchResult.results[0].hits[0]
 
-        // NOTE: normalize date;
-        let [year, month, day] = metadata.first_aired || '1995-12-4' // NOTE: the birthday of JavaScript;
-          .split('-')
-          .map(iter => Number(iter))
+        // NOTE: get profiles;
+        const profile = await tvdb.profile(metadata.url)
+          .catch(error => debug('error while profiling tvdb url:', error))
 
-        month--
-        day++
+        if (!profile) {
+          debug('profiling failed, skipping')
+
+          continue
+        }
 
         // NOTE: grab `animeId`;
-        let id = existing.items[metadata.title]
+        let id = existing.items[metadata.name]
 
         // NOTE: insert new anime object when not found;
         if (!id) {
-          [id] = await knex('anime')
+          const airingTime = profile.airs[0].split('at ')[1].split(':')
+
+          if (airingTime[1].slice(2) === 'pm') {
+            airingTime[0] = Number(airingTime[0]) + 12
+          }
+
+          airingTime[1] = airingTime[1].slice(0, 2)
+
+          // NOTE: prevent ESlint error by not using literal;
+          id = await knex('anime')
             .returning('id') // NOTE: return `animeId` for future relations;
             .insert({
               title: metadata.name,
               broadcaster: metadata.network,
-              status: metadata.status,
-              releaseDate: new Date(year, month, day)
+              status: metadata.status.toLowerCase(),
+              release: metadata.first_aired || '1995-12-4',
+              genres: profile.genres.map(genres => Buffer.from(genres).toString('base64')).join(';'),
+              airingDay: dayFilter.indexOf(profile.airs[0].slice(0, 3).toLowerCase()),
+              airingTime: `${airingTime[0]}:${airingTime[1]}`
             })
             .catch(error => debug('error while inserting metadata into database:', error))
+
+          // NOTE: get first row from results;
+          id = id[0]
 
           debug('updating details:', metadata.title)
 
