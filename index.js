@@ -1,6 +1,6 @@
 const {
   ohys
-} = require('./structures')
+} = require('./structures/ohys')
 
 module.exports = {
   ohys
