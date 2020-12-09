@@ -1,4 +1,6 @@
+module.exports.actions = require('./actions')
 module.exports.database = require('./database')
 module.exports.ohys = require('./ohys')
+module.exports.tasks = require('./tasks')
 module.exports.tvdb = require('./tvdb')
 module.exports.utils = require('./utils')

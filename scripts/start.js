@@ -29,4 +29,11 @@ module.exports = (async () => {
   }
 
   await structures.database.createTables()
+
+  // NOTE: code;
+  const schedulers = {}
+
+  schedulers.ohys = {}
+  // NOTE: update schedule every hour;
+  schedulers.ohys.schedule = structures.utils.createCron('0 * * * *', structures.tasks.updateSchedule, true)
 })()
