@@ -41,7 +41,7 @@ module.exports = async (opts = {}) => {
 
     // NOTE: if current line is representing day;
     if (days.indexOf(linef) > -1) {
-      day = days.indexOf(linef) % 7
+      day = days.indexOf(linef) % 8
 
       debug('detected `day` format from current line and setting day to:', day)
     } else {
