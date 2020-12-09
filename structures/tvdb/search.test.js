@@ -7,4 +7,4 @@ search({
     query: 'Majo no Tabitabi'
   }
 })
-  .then(result => console.log(result))
+  .then(result => console.log(JSON.stringify(result)))
