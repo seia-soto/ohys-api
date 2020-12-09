@@ -8,7 +8,8 @@ module.exports = {
   database: {
     client: 'sqlite3',
     connection: {
-      filename: './.data/data.db'
+      filename: './.data/data.db',
+      timezone: 'UTC'
     },
     useNullAsDefault: true
   }

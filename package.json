@@ -10,6 +10,7 @@
     "debug": "cross-env DEBUG=* node scripts/start"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
     "cross-env": "^7.0.2",
     "debug": "^4.1.1",
     "knex": "^0.21.12",
