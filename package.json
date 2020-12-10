@@ -1,6 +1,6 @@
 {
   "name": "ohys-api",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "main": "index.js",
   "repository": "https://github.com/Seia-Soto/ohys-api.git",
   "author": "Seia-Soto <seia@outlook.kr>",

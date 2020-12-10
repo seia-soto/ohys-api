@@ -87,6 +87,9 @@ Query the schedule file in modern format with fast search logic of title.
 > **Warning**
 > The schedule is not always able to parse if something change.
 
+> **Warning**
+> Using `getSchedulePattern` method is recommended.
+
 ```js
 const { getSchedule } = ohys
 
@@ -121,4 +124,52 @@ Query the schedule file with heuristic search logic of title which can even pars
 > **Warning**
 > The schedule is not always able to parse if something change.
 
-- The usage is same.
+> **Warning**
+> Using `getSchedulePattern` method is recommended.
+
+```js
+const { getScheduleCompatible } = ohys
+```
+
+- The usage is same as `getSchedule`.
+
+### getSchedulePattern
+
+Query the schedule file with regular expression and heuristic search logic of title which can parse almost everything. (largest coverage)
+
+> **Warning**
+> If this logic doesn't work, use `getScheduleCompatible` instead.
+
+```js
+const { getSchedulePattern } = ohys
+
+getSchedulePattern({
+  year: 2020,
+  quarter: 1,
+  repo: 'ohyongslck/annie',
+  branch: 'master'
+})
+  .then(data => {
+    console.log(data)
+
+/*
+[
+  {
+    year: 2020,
+    quarter: 1,
+    day: 0, // NOTE: '7' is special.
+    date: '00/00',
+    time: '00:00',
+    name: {
+      promised: '...', // NOTE: (optional) You need to check this(`name.promised`) value to check if the value of title is present.
+      English: '...', // NOTE: (optional)
+      Korean: '...', // NOTE: (optional)
+      Japanese: '...' // NOTE: (optional)
+    },
+    comment: '...',
+    original: '...'
+  }
+]
+*/
+  })
+```
