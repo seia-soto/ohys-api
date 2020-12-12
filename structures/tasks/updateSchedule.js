@@ -53,7 +53,7 @@ module.exports = async () => {
       debug('querying schedule:', `${year}@${k}`)
 
       // NOTE: query schedule data;
-      const schedule = await ohys.getScheduleCompatible({
+      const schedule = await ohys.getSchedulePattern({
         year,
         quarter: k
       })
@@ -63,7 +63,7 @@ module.exports = async () => {
 
       // NOTE: loop scheduled items;
       for (let j = 0, s = schedule.length; j < s; j++) {
-        const metadata = await actions.anime.query(schedule[j].name)
+        const metadata = await actions.anime.query(schedule[j].name.English || schedule[j].name.promised)
 
         if (!metadata) continue
 

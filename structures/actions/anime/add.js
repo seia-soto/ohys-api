@@ -1,4 +1,7 @@
+const path = require('path')
+const config = require('../../../config')
 const { knex } = require('../../database')
+const { download } = require('../file')
 const debug = require('./debug')
 
 const dayFilter = [
@@ -27,16 +30,22 @@ module.exports = async (data = {}) => {
   query.release = data.first_aired
 
   if (profile.airs && profile.airs[0]) {
-    const airingTime = profile.airs[0].split('at ')[1].split(':')
+    debug('parsing airing time:', profile.airs[0])
 
-    if (airingTime[1].slice(2) === 'pm') {
-      airingTime[0] = Number(airingTime[0]) + 12
+    const divided = profile.airs[0].split(',')
+
+    for (let i = 0, l = divided.length; i < l - 1; i++) {
+      // NOTE: bitwise operation; `base & (1 << n)` to calc;
+      query.airingDay = (query.airingDay || 0) | 1 << dayFilter.indexOf(divided[0].slice(0, 3).toLowerCase())
     }
 
-    airingTime[1] = airingTime[1].slice(0, 2)
+    const last = divided[divided.length - 1]
 
-    query.airingDay = dayFilter.indexOf(profile.airs[0].slice(0, 3).toLowerCase())
-    query.airingTime = `${airingTime[0]}:${airingTime[1]}`
+    if (last) {
+      const [hours, minutes, meridiemTerm = ''] = last.match(/(\d{1,2}):(\d{1,2})(\w{2})?/)
+
+      if (hours && minutes) query.airingTime = `${meridiemTerm.toLowerCase() === 'pm' ? hours + 12 : hours}:${minutes}`
+    }
   }
 
   // NOTE: prevent ESlint error by not using literal;
@@ -45,7 +54,7 @@ module.exports = async (data = {}) => {
     .insert(query)
     .catch(error => debug('error while inserting metadata into database:', error))
 
-  debug('updating details:', data.title)
+  debug('updating details:', data.name)
 
   const titleLanguages = Object.keys(data.translations || {})
   const detailed = []
@@ -66,6 +75,13 @@ module.exports = async (data = {}) => {
   await knex('anime_details')
     .insert(detailed)
     .catch(error => debug('error while inserting detailed metadata into database:', error))
+
+  // NOTE: downloading poster;
+  debug('downloading poster')
+
+  if (data.poster) {
+    await download(data.poster, path.join(__dirname, '..', '..', '..', config.data.posters, String(id)), true)
+  }
 
   return id
 }

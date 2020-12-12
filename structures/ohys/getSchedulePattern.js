@@ -16,13 +16,14 @@ const comments = [
 ]
 
 module.exports = async (opts = {}) => {
+  opts.url = opts.url || ''
   opts.repo = opts.repo || 'ohyongslck/annie'
   opts.branch = opts.branch || 'master'
   opts.year = opts.year || new Date().getFullYear()
   opts.quarter = opts.quarter || 1
 
   // NOTE: build url;
-  const url = `https://raw.githubusercontent.com/${opts.repo}/${opts.branch}/${opts.year}@${opts.quarter}`
+  const url = opts.url || `https://raw.githubusercontent.com/${opts.repo}/${opts.branch}/${opts.year}@${opts.quarter}`
 
   debug('requesting to:', url)
 
@@ -66,7 +67,10 @@ module.exports = async (opts = {}) => {
     debug('replacing comments cases:', comments.join(', '))
 
     for (let k = 0, s = comments.length; k < s; k++) {
-      [pruned, comment] = pruned.split(comments[k])
+      [pruned, ...comment] = pruned.split(comments[k])
+
+      // NOTE: resolve full string;
+      comment = comment.join(comments[k])
     }
 
     debug('matching title index with dividers:', dividers.join(', '))
