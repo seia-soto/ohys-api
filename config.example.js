@@ -17,5 +17,10 @@ module.exports = {
   },
   tasks: {
     updateSchedule: 1
+  },
+  externals: {
+    tmdb: {
+      v3ApiKey: ''
+    }
   }
 }
