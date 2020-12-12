@@ -13,6 +13,8 @@ const getAnime = {
   handler: async (request, reply) => {
     const { id } = request.query
 
+    if (!id) return {}
+
     const [data] = await knex('anime')
       .select('*')
       .where({

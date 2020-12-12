@@ -16,6 +16,8 @@ const getSchedules = {
   handler: async (request, reply) => {
     const { year, quarter } = request.query
 
+    if (!year || !quarter) return []
+
     const scheduledAnimes = await knex('anime')
       .select('*')
       .where({
