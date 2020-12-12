@@ -1,5 +1,8 @@
+const fastify = require('fastify')
 const fs = require('fs')
 const path = require('path')
+const qs = require('qs')
+const api = require('../api')
 const structures = require('../structures')
 const config = require('../config')
 const debug = require('./debug')
@@ -27,15 +30,47 @@ module.exports = (async () => {
     }
   }
 
+  // NOTE: required tasks;
   await structures.database.createTables()
 
+  // NOTE: api;
+  debug('starting api server')
+
+  const app = fastify({
+    querystringParser: q => qs.parse(q)
+  })
+
+  app.get('/', async (req, reply) => reply.redirect('https://github.com/Seia-Soto/ohys-api'))
+
+  const versions = Object.keys(api)
+
+  for (let i = 0, l = versions.length; i < l; i++) {
+    const version = versions[i]
+
+    debug('registering api version:', version)
+
+    app.register(api[version], { prefix: '/api/' + version })
+  }
+
+  debug('listening on port:', config.app.port)
+
+  try {
+    await app.listen(config.app.port)
+  } catch (error) {
+    debug('got error while processing requests:', error)
+  }
+
   // NOTE: code;
+  debug('loading scheduled tasks')
+
   const schedulers = {}
 
   schedulers.ohys = {}
   // NOTE: update schedule every hour;
-  schedulers.ohys.schedule = await structures.utils.createCron('0 * * * *', structures.tasks.updateSchedule, {
-    useFirstRun: 1,
-    waitFirstRun: 1
-  })
+  if (config.tasks.updateSchedule) {
+    schedulers.ohys.schedule = structures.utils.createCron('0 * * * *', structures.tasks.updateSchedule, {
+      useFirstRun: 1,
+      waitFirstRun: 1
+    })
+  }
 })()

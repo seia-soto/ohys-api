@@ -1,4 +1,7 @@
 module.exports = {
+  app: {
+    port: 9012
+  },
   data: {
     base: './.data',
     posters: './.data/posters',
@@ -11,5 +14,8 @@ module.exports = {
       timezone: 'UTC'
     },
     useNullAsDefault: true
+  },
+  tasks: {
+    updateSchedule: 1
   }
 }

@@ -42,9 +42,9 @@ module.exports = async (data = {}) => {
     const last = divided[divided.length - 1]
 
     if (last) {
-      const [hours, minutes, meridiemTerm = ''] = last.match(/(\d{1,2}):(\d{1,2})(\w{2})?/)
+      const [, hours, minutes, meridiemTerm = ''] = last.match(/(\d{1,2}):(\d{1,2})(\w{2})?/)
 
-      if (hours && minutes) query.airingTime = `${meridiemTerm.toLowerCase() === 'pm' ? hours + 12 : hours}:${minutes}`
+      if (hours && minutes) query.airingTime = `${meridiemTerm.toLowerCase() === 'pm' ? Number(hours) + 12 : hours}:${minutes}`
     }
   }
 

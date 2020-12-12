@@ -13,6 +13,7 @@
     "cheerio": "^1.0.0-rc.3",
     "cross-env": "^7.0.2",
     "debug": "^4.1.1",
+    "fastify": "^3.9.1",
     "knex": "^0.21.12",
     "mysql2": "^2.2.5",
     "node-fetch": "^2.6.1",
