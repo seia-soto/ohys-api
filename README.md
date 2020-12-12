@@ -4,6 +4,8 @@
 
 Ohys-API is a project to redistribute the anime metadata of Ohys-Raws.
 
+> This project is using the TMDb API to approach anime metadata.
+
 ## Table of Contents
 
 - [Scripts](#scripts)
@@ -22,6 +24,7 @@ Start the application with logging only important messages.
 ## `yarn debug`
 
 Start the application with logging all messages even from deps.
+This project is using [debug](https://www.npmjs.com/package/debug) package to log.
 
 # Development
 
@@ -139,6 +142,9 @@ Query the schedule file with regular expression and heuristic search logic of ti
 
 > **Warning**
 > If this logic doesn't work, use `getScheduleCompatible` instead.
+
+> **Warning**
+> Using __only__ `name.promised` is highly recommended, I am working on to resolve invalid name detection.
 
 ```js
 const { getSchedulePattern } = ohys

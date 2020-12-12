@@ -1,5 +1,6 @@
 module.exports = table => {
   table.increments()
+  table.datetime('updatedAt')
 
   // NOTE: api specification;
   table.integer('animeId')

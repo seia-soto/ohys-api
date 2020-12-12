@@ -11,9 +11,23 @@ const days = [
 const dividers = [
   '/', '[', ']'
 ]
+const aggravateDividers = [
+  '[', ']'
+]
 const comments = [
   '//', '/{', '/ [', ' / '
 ]
+
+const removeUselessDividers = text => {
+  for (let i = 0, l = aggravateDividers.length; i < l; i++) {
+    const divider = aggravateDividers[i]
+
+    if (text.startsWith(divider)) text = text.slice(1)
+    if (text.endsWith(divider)) text = text.slice(0, text.length - 1)
+  }
+
+  return text
+}
 
 module.exports = async (opts = {}) => {
   opts.url = opts.url || ''
@@ -82,9 +96,9 @@ module.exports = async (opts = {}) => {
         .reverse()
 
       for (let n = 0, z = tokens.length; n < z; n++) {
-        const token = tokens[n]
+        const token = removeUselessDividers(tokens[n]
           .slice(1) // NOTE: replace divider;
-          .trim()
+          .trim())
 
         debug(token)
 

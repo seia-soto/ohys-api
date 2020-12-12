@@ -2,9 +2,11 @@ module.exports = {
   app: {
     port: 9012
   },
+  ohys: {
+    getScheduleInRecentYears: 4
+  },
   data: {
     base: './.data',
-    posters: './.data/posters',
     torrents: './.data/torrents'
   },
   database: {
@@ -16,7 +18,10 @@ module.exports = {
     useNullAsDefault: true
   },
   tasks: {
-    updateSchedule: 1
+    updateSchedule: {
+      useFirstRun: 1,
+      waitFirstRun: 1
+    }
   },
   externals: {
     tmdb: {

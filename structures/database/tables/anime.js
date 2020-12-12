@@ -1,12 +1,16 @@
 module.exports = table => {
   table.increments()
+  table.datetime('updatedAt')
 
   // NOTE: metadata;
-  table.string('title', 1024)
-  table.string('broadcaster', 512)
+  table.string('name', 1024)
+  table.string('scheduleName', 1024)
+  table.string('network', 512)
   table.string('status', 64)
-  table.date('release')
-  table.string('genres', 2048) // NOTE: encoder=base64; divider=semicolon;
+  table.string('backdropImage', 2048)
+  table.string('posterImage', 2048)
+  table.integer('year')
+  table.integer('quarter')
   table.integer('airingDay')
   table.time('airingTime')
 

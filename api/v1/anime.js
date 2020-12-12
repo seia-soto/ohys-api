@@ -24,7 +24,7 @@ const getAnime = {
     }
 
     const details = await knex('anime_details')
-      .select('language', 'title', 'description')
+      .select('language', 'name', 'overview')
       .where({
         animeId: data.id
       })

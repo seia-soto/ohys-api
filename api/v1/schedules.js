@@ -16,8 +16,8 @@ const getSchedules = {
   handler: async (request, reply) => {
     const { year, quarter } = request.query
 
-    const scheduledAnimes = await knex('schedule')
-      .select('animeId')
+    const scheduledAnimes = await knex('anime')
+      .select('*')
       .where({
         year,
         quarter
@@ -26,24 +26,15 @@ const getSchedules = {
 
     for (let i = 0, l = scheduledAnimes.length; i < l; i++) {
       const item = scheduledAnimes[i]
-      const [data] = await knex('anime')
-        .select('*')
-        .where({
-          id: item.animeId,
-          status: 'continuing'
-        })
-
-      if (!data) continue
-
       const details = await knex('anime_details')
-        .select('language', 'title')
+        .select('language', 'name')
         .where({
-          animeId: data.id
+          animeId: item.id
         })
 
-      data.descriptions = details
+      item.overview = details
 
-      animes.push(data)
+      animes.push(item)
     }
 
     return animes

@@ -12,7 +12,6 @@ module.exports = (async () => {
 
   const requiredDirectories = [
     config.data.base,
-    config.data.posters,
     config.data.torrents
   ]
 
@@ -68,9 +67,6 @@ module.exports = (async () => {
   schedulers.ohys = {}
   // NOTE: update schedule every hour;
   if (config.tasks.updateSchedule) {
-    schedulers.ohys.schedule = structures.utils.createCron('0 * * * *', structures.tasks.updateSchedule, {
-      useFirstRun: 1,
-      waitFirstRun: 1
-    })
+    schedulers.ohys.schedule = structures.utils.createCron('0 * * * *', structures.tasks.updateSchedule, config.tasks.updateSchedule)
   }
 })()
