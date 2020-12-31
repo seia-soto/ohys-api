@@ -63,7 +63,7 @@ module.exports = async (opts = {}) => {
 
     // NOTE: if current line is representing day;
     for (let k = 0, s = days.length; k < s; k++) {
-      if (line.startsWith(days[k])) {
+      if (line.toUpperCase().startsWith(days[k])) {
         day = k % 8
 
         debug('detected `day` format from current line and setting day to:', day)
