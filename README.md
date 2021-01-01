@@ -120,3 +120,35 @@ getSchedulePattern({
 */
   })
 ```
+
+### parseTitle
+
+Parse the title from `getFeed` to some useful parts.
+
+```js
+const { getFeed, parseTitle } = ohys
+
+getFeed({
+  prettify: 1
+})
+  .then(result => {
+    for (let i = 0, l = result.length; i < l; i++) {
+      const title = result[i].name
+
+      console.log(parseTitle(title))
+
+/*
+{
+  original: '...',
+  provider: 'Ohys-Raws',
+  series: '...',
+  episode: '...',
+  channel: '...',
+  resolution: '...',
+  audioFormat: '...',
+  videoFormat: '...'
+}
+*/
+    }
+  })
+```
