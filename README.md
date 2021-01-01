@@ -82,66 +82,7 @@ getFeed({
 
 ### getSchedule
 
-Query the schedule file in modern format with fast search logic of title.
-
-> **Warning**
-> This method will only parse the schedule format in 2020 or later.
-
-> **Warning**
-> The schedule is not always able to parse if something change.
-
-> **Warning**
-> Using `getSchedulePattern` method is recommended.
-
-```js
-const { getSchedule } = ohys
-
-getSchedule({
-  year: 2020,
-  quarter: 1,
-  repo: 'ohyongslck/annie',
-  branch: 'master'
-})
-  .then(data => {
-    console.log(data)
-
-/*
-[
-  {
-    year: 2020,
-    quarter: 1,
-    day: 0, // NOTE: '7' is special.
-    name: '...',
-    comment: '...',
-    original: '...'
-  }
-]
-*/
-  })
-```
-
-### getScheduleCompatible
-
-Query the schedule file with heuristic search logic of title which can even parse 2019 or earlier, but this logic is slower than `getSchedule`.
-
-> **Warning**
-> The schedule is not always able to parse if something change.
-
-> **Warning**
-> Using `getSchedulePattern` method is recommended.
-
-```js
-const { getScheduleCompatible } = ohys
-```
-
-- The usage is same as `getSchedule`.
-
-### getSchedulePattern
-
 Query the schedule file with regular expression and heuristic search logic of title which can parse almost everything. (largest coverage)
-
-> **Warning**
-> If this logic doesn't work, use `getScheduleCompatible` instead.
 
 > **Warning**
 > Using __only__ `name.promised` is highly recommended, I am working on to resolve invalid name detection.

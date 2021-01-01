@@ -8,15 +8,36 @@ const days = [
   '月', '火', '水', '木', '金', '土', '日', 'SP',
   'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN', 'SP'
 ]
+const dividers = [
+  '/', '[', ']'
+]
+const aggravateDividers = [
+  '[', ']'
+]
+const comments = [
+  '//', '/{', '/ [', ' / '
+]
+
+const removeUselessDividers = text => {
+  for (let i = 0, l = aggravateDividers.length; i < l; i++) {
+    const divider = aggravateDividers[i]
+
+    if (text.startsWith(divider)) text = text.slice(1)
+    if (text.endsWith(divider)) text = text.slice(0, text.length - 1)
+  }
+
+  return text
+}
 
 module.exports = async (opts = {}) => {
+  opts.url = opts.url || ''
   opts.repo = opts.repo || 'ohyongslck/annie'
   opts.branch = opts.branch || 'master'
   opts.year = opts.year || new Date().getFullYear()
   opts.quarter = opts.quarter || 1
 
   // NOTE: build url;
-  const url = `https://raw.githubusercontent.com/${opts.repo}/${opts.branch}/${opts.year}@${opts.quarter}`
+  const url = opts.url || `https://raw.githubusercontent.com/${opts.repo}/${opts.branch}/${opts.year}@${opts.quarter}`
 
   debug('requesting to:', url)
 
@@ -35,46 +56,93 @@ module.exports = async (opts = {}) => {
 
   for (let i = 0, l = lines.length; i < l; i++) {
     const line = lines[i]
-    const linef = line.split()[0]
 
     debug('parsing current line:', line)
 
+    if (!line) continue
+
     // NOTE: if current line is representing day;
-    if (days.indexOf(linef) > -1) {
-      day = days.indexOf(linef) % 8
+    for (let k = 0, s = days.length; k < s; k++) {
+      if (line.toUpperCase().startsWith(days[k])) {
+        day = k % 8
 
-      debug('detected `day` format from current line and setting day to:', day)
-    } else {
-      const match = line.match(/(.*)\[(.*)\](.*)/)
+        debug('detected `day` format from current line and setting day to:', day)
 
-      // NOTE: if there is correct format of anime name;
-      if (match && match[1]) {
-        debug('detected name format from the line')
-
-        const [original, ...args] = match
-        const [data, name, comment] = args
-        let altName
-
-        if (!name.match(/[a-zA-Z가-힣一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤]/)) {
-          debug('finding next field because current title does not have any alphabet')
-
-          try {
-            altName = data.match(/.*\[(.*)\]/)[1]
-          } catch (error) {
-            debug('supressing error:', error)
-          }
-        }
-
-        schedules.push({
-          year: opts.year,
-          quarter: opts.quarter,
-          day,
-          name: altName || name || data,
-          comment,
-          original
-        })
+        continue
       }
     }
+
+    const title = {}
+    let pruned = (' ' + line).slice(1)
+    let comment
+    let date
+    let time
+
+    debug('replacing comments cases:', comments.join(', '))
+
+    for (let k = 0, s = comments.length; k < s; k++) {
+      [pruned, ...comment] = pruned.split(comments[k])
+
+      // NOTE: resolve full string;
+      comment = comment.join(comments[k])
+    }
+
+    debug('matching title index with dividers:', dividers.join(', '))
+
+    for (let k = 0, s = dividers.length; k < s; k++) {
+      const divider = dividers[k]
+      const tokens = pruned
+        .split(divider)
+        .reverse()
+
+      for (let n = 0, z = tokens.length; n < z; n++) {
+        const token = removeUselessDividers(tokens[n]
+          .slice(1) // NOTE: replace divider;
+          .trim())
+
+        debug(token)
+
+        if (!time) {
+          const possible = token.match(/\d{1,2}:\d{1,2}/i) || []
+
+          time = possible[0]
+        } else if (!date) {
+          const possible = token.match(/\d{1,2}\/\d{1,2}/) || []
+
+          date = possible[0]
+        } else if (token && token.match(/[a-zA-Z가-힣一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤]/u)) {
+          if (!title.promised) {
+            title.promised = token
+          }
+          if (!title.English && token.match(/[a-z]/i)) {
+            title.English = token
+          }
+          if (!title.Korean && token.match(/[가-힣]/ui)) {
+            title.Korean = token
+          }
+          if (!title.Japanese && token.match(/[一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤]/ui)) {
+            title.Japanese = token
+          }
+        }
+      }
+    }
+
+    if (!title.promised) {
+      debug('skipping current line because no case were found')
+
+      continue
+    }
+
+    schedules.push({
+      year: opts.year,
+      quarter: opts.quarter,
+      day,
+      date,
+      time,
+      name: title,
+      comment,
+      original: line
+    })
   }
 
   return schedules
