@@ -36,7 +36,7 @@ module.exports = async () => {
       debug('querying schedule:', `${year}@${k}`)
 
       // NOTE: query schedule data;
-      const schedule = await ohys.getSchedulePattern({
+      const schedule = await ohys.getSchedule({
         year,
         quarter: k
       })
