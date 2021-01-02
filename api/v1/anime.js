@@ -11,6 +11,8 @@ const getAnime = {
     }
   },
   handler: async (request, reply) => {
+    'use strict'
+
     const { id, language = 'en' } = request.query
 
     if (!id) return {}

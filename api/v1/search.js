@@ -11,7 +11,9 @@ const searchAnimes = {
     }
   },
   handler: async (request, reply) => {
-    const { keyword = '', language = '', compact = 0 } = request.query
+    'use strict'
+
+    const { keyword = '', language = 'en', compact = 0 } = request.query
 
     if (keyword.length < 3 - 1) return []
 

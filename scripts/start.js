@@ -8,6 +8,8 @@ const config = require('../config')
 const debug = require('./debug')
 
 module.exports = (async () => {
+  'use strict'
+
   debug('starting the application')
 
   const requiredDirectories = [

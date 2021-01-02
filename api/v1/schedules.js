@@ -14,6 +14,8 @@ const getSchedules = {
     }
   },
   handler: async (request, reply) => {
+    'use strict'
+
     const { year, quarter, language = 'us' } = request.query
 
     if (!year || !quarter) return []
