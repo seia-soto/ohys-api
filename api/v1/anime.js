@@ -11,7 +11,7 @@ const getAnime = {
     }
   },
   handler: async (request, reply) => {
-    const { id } = request.query
+    const { id, language = 'en' } = request.query
 
     if (!id) return {}
 
@@ -21,17 +21,21 @@ const getAnime = {
         id
       })
 
-    if (!data) {
-      throw new Error(`Missing item for id: ${id}`)
-    }
+    if (!data) return {}
 
-    const details = await knex('anime_details')
+    data.translations = await knex('anime_details')
       .select('language', 'name', 'overview')
+      .where({
+        animeId: data.id,
+        language: language.length === 2
+          ? language
+          : 'en'
+      })
+    data.episodes = await knex('episode')
+      .select('number', 'resolution', 'filename')
       .where({
         animeId: data.id
       })
-
-    data.descriptions = details
 
     return data
   }

@@ -62,6 +62,7 @@ module.exports = async opts => {
         status: details.status,
         backdropImage: details.backdrop_path,
         posterImage: details.poster_path,
+        tmdbId: search.id,
         ...extendData
       })
       .where({
@@ -80,6 +81,7 @@ module.exports = async opts => {
         status: details.status,
         backdropImage: details.backdrop_path,
         posterImage: details.poster_path,
+        tmdbId: search.id,
         ...extendData
       })
 

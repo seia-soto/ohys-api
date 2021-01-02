@@ -14,5 +14,8 @@ module.exports = table => {
   table.integer('airingDay')
   table.time('airingTime')
 
+  // NOTE: 3rd parties;
+  table.integer('tmdbId')
+
   return table
 }
