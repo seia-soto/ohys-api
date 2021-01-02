@@ -4,8 +4,11 @@ const qs = require('qs')
 const { name, version } = require('../../package.json')
 const debug = require('./debug')
 
-module.exports = async (opts = {}) => {
+module.exports = async opts => {
+  'use strict'
+
   // NOTE: build query;
+  opts = opts || {}
   opts.base = opts.base || 'https://tvshowtime-dsn.algolia.net/1/indexes/*/queries'
   opts.algolia = opts.algolia || {}
   opts.algolia.agent = opts.algoliaAgent || 'Algolia for vanilla JavaScript (lite) 3.32.0;instantsearch.js (3.5.3);JS Helper (2.28.0)'

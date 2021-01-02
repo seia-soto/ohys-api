@@ -2,7 +2,10 @@ const createLogger = require('./createLogger')
 
 const debug = createLogger('utils/retryable')
 
-const retryable = async (task, opts = {}) => {
+const retryable = async (task, opts) => {
+  'use strict'
+
+  opts = opts || {}
   opts.maxTries = opts.maxTries || 5
 
   let retries = 0

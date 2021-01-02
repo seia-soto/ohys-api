@@ -1,6 +1,6 @@
 process.env.DEBUG = '*'
 
-const getSchedule = require('./getScheduleCompatible')
+const getSchedule = require('./getSchedule')
 
 const years = [new Date().getFullYear()]
 

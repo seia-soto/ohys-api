@@ -7,8 +7,8 @@ module.exports = table => {
 
   // NOTE: metadata;
   table.float('number')
+  table.string('resolution', 32)
   table.string('filename', 2048)
-  table.string('url', 4096)
 
   return table
 }

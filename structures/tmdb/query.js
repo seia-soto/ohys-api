@@ -4,7 +4,10 @@ const config = require('../../config')
 const { name, version } = require('../../package.json')
 const debug = require('./debug')
 
-module.exports = async (path, opts = {}) => {
+module.exports = async (path, opts) => {
+  'use strict'
+
+  opts = opts || {}
   opts.api_key = opts.api_key || config.externals.tmdb.v3ApiKey
 
   const url = 'https://api.themoviedb.org/3' + path + '?' + qs.stringify(opts)

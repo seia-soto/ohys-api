@@ -1,5 +1,11 @@
-module.exports = (text = '') => {
-  const expression = /(?:\[([^\r\n]*)\][\W]?)?(?:(?:([^\r\n]+?)(?: - ([^\r\n]+?))?)[\W]?[(|[]([^\r\n(]+)? (\d+x\d+|\d{3,}\w)? ([^\r\n]+)?[)\]][^.\r\n]*(?:\.([^\r\n.]*)(?:\.[\w]+)?)?)$/gi
+const debug = require('./debug')
+
+module.exports = text => {
+  'use strict'
+
+  if (!text) return
+
+  const expression = /(?:\[([^\r\n]*)\][\W]?)?(?:(?:([^\r\n]+?)(?: - ([0-9.]+?(?: END)?))?)[\W]?[(|[]([^\r\n(]+)? (\d+x\d+|\d{3,}\w)? ([^\r\n]+)?[)\]][^.\r\n]*(?:\.([^\r\n.]*)(?:\.[\w]+)?)?)$/gi
   const result = {}
   const keys = [
     'original',
@@ -18,7 +24,7 @@ module.exports = (text = '') => {
     // NOTE: Fill out `provider`
     data[1] = data[1] || 'Ohys-Raws'
     // NOTE: Fill out `episode`.
-    data[3] = data[3] || 'n/a'
+    data[3] = data[3] || -1
     // NOTE: Resolve non-standard `resolution` value.
     if (!/\d+x\d+/g.test(data[5])) {
       const extract = /(\d{3,})\w/g.exec(data[5])
@@ -45,10 +51,10 @@ module.exports = (text = '') => {
 
     return result
   } catch (error) {
-    this.debug('error during parsing title: ' + text)
+    debug('error during parsing title: ' + text)
 
     return {
-      error: 'Unexpected case!'
+      error: 'unexpected-case'
     }
   }
 }

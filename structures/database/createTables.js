@@ -3,6 +3,8 @@ const debug = require('./debug')
 const knex = require('./knex')
 
 module.exports = async () => {
+  'use strict'
+
   const tables = Object.keys(schemas)
 
   debug('checking if tables are existing')

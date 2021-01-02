@@ -65,8 +65,21 @@ module.exports = (async () => {
   const schedulers = {}
 
   schedulers.ohys = {}
+
   // NOTE: update schedule every hour;
   if (config.tasks.updateSchedule) {
-    schedulers.ohys.schedule = structures.utils.createCron('0 * * * *', structures.tasks.updateSchedule, config.tasks.updateSchedule)
+    schedulers.ohys.schedule = await structures.utils.createCron(
+      '0 * * * *',
+      structures.tasks.updateSchedule,
+      config.tasks.updateSchedule
+    )
+  }
+  // NOTE: update feed every minute;
+  if (config.tasks.updateFeed) {
+    schedulers.ohys.feed = structures.utils.createCron(
+      '* * * * *',
+      structures.tasks.updateFeed,
+      config.tasks.updateFeed
+    )
   }
 })()

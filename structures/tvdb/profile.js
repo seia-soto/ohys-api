@@ -4,7 +4,9 @@ const fetch = require('node-fetch')
 const { name, version } = require('../../package.json')
 const debug = require('./debug')
 
-module.exports = async (path = '') => {
+module.exports = async path => {
+  'use strict'
+
   if (!path) return
 
   // NOTE: build query

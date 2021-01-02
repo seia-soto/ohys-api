@@ -1,6 +1,10 @@
 const schedule = require('node-schedule')
 
-module.exports = async (rule, fn, opts = {}) => {
+module.exports = async (rule, fn, opts) => {
+  'use strict'
+
+  opts = opts || {}
+
   if (opts.useFirstRun) {
     if (opts.waitFirstRun) {
       await fn()

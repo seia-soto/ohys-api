@@ -2,11 +2,14 @@ const { createWriteStream } = require('fs')
 const { pipeline } = require('stream')
 const { promisify } = require('util')
 const fetch = require('node-fetch')
-const debug = require('./debug')
+const createLogger = require('./createLogger')
 
 const streamPipeline = promisify(pipeline)
+const debug = createLogger('utils/downloadFile')
 
 module.exports = async (url, path, useExtension) => {
+  'use strict'
+
   debug('downloading url:', url)
 
   const res = await fetch(url)

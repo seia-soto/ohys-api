@@ -29,7 +29,10 @@ const removeUselessDividers = text => {
   return text
 }
 
-module.exports = async (opts = {}) => {
+module.exports = async opts => {
+  'use strict'
+
+  opts = opts || {}
   opts.url = opts.url || ''
   opts.repo = opts.repo || 'ohyongslck/annie'
   opts.branch = opts.branch || 'master'

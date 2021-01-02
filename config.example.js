@@ -3,7 +3,8 @@ module.exports = {
     port: 9012
   },
   ohys: {
-    getScheduleInRecentYears: 4
+    getScheduleInRecentYears: 4,
+    getDataOfScheduleIn: 1000 * 60 * 60 * 24 // NOTE: 1 day
   },
   data: {
     base: './.data',
@@ -21,6 +22,9 @@ module.exports = {
     updateSchedule: {
       useFirstRun: 1,
       waitFirstRun: 1
+    },
+    updateFeed: {
+      useFirstRun: 1
     }
   },
   externals: {

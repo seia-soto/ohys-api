@@ -4,7 +4,10 @@ const qs = require('qs')
 const { name, version } = require('../../package.json')
 const debug = require('./debug')
 
-module.exports = async (opts = {}) => {
+module.exports = async opts => {
+  'use strict'
+
+  opts = opts || {}
   opts.base = opts.base || 'http://eu.ohys.net/t'
   opts.endpoint = opts.endpoint || '/json.php'
 
