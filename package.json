@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "start": "cross-env DEBUG=ohys* node scripts/start",
-    "debug": "cross-env DEBUG=* node scripts/start"
+    "start:api": "cross-env DEBUG=ohys* API_ONLY=1 node scripts/start",
+    "debug": "cross-env DEBUG=* node scripts/start",
+    "debug:api": "cross-env DEBUG=* API_ONLY=1 node scripts/start"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",

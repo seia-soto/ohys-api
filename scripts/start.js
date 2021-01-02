@@ -59,6 +59,8 @@ module.exports = (async () => {
     debug('got error while processing requests:', error)
   }
 
+  if (process.env.API_ONLY) return
+
   // NOTE: code;
   debug('loading scheduled tasks')
 
