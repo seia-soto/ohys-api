@@ -34,14 +34,25 @@ const searchAnimes = {
     for (let i = 0, l = results.length; i < l; i++) {
       const item = results[i]
 
-      item.translations = await knex('anime_details')
-        .select('language', 'name')
+      let [translation] = await knex('anime_details')
+        .select('language', 'name', 'overview')
         .where({
           animeId: item.id,
           language: language.length === 2
             ? language
             : 'en'
         })
+
+      if (language !== 'en' && !translation) {
+        [translation] = await knex('anime_details')
+          .select('language', 'name', 'overview')
+          .where({
+            animeId: item.id,
+            language: 'en'
+          })
+      }
+
+      item.translation = translation || {}
 
       animes.push(item)
     }

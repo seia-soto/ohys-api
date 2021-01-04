@@ -2,6 +2,7 @@ const fastify = require('fastify')
 const fs = require('fs')
 const path = require('path')
 const qs = require('qs')
+const cors = require('fastify-cors')
 const api = require('../api')
 const structures = require('../structures')
 const config = require('../config')
@@ -41,6 +42,9 @@ module.exports = (async () => {
     querystringParser: q => qs.parse(q)
   })
 
+  app.register(cors, {
+    methods: ['GET']
+  })
   app.get('/', async (req, reply) => reply.redirect('https://github.com/Seia-Soto/ohys-api'))
 
   const versions = Object.keys(api)

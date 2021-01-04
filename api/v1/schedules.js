@@ -16,7 +16,7 @@ const getSchedules = {
   handler: async (request, reply) => {
     'use strict'
 
-    const { year, quarter, language = 'us' } = request.query
+    const { year, quarter, language = 'en' } = request.query
 
     if (!year || !quarter) return []
 
@@ -26,19 +26,33 @@ const getSchedules = {
         year,
         quarter
       })
+      .whereNot({
+        status: 'Ended'
+      })
     const animes = []
 
     for (let i = 0, l = scheduledAnimes.length; i < l; i++) {
       const item = scheduledAnimes[i]
 
-      item.translations = await knex('anime_details')
-        .select('language', 'name')
+      let [translation] = await knex('anime_details')
+        .select('language', 'name', 'overview')
         .where({
           animeId: item.id,
           language: language.length === 2
             ? language
             : 'en'
         })
+
+      if (language !== 'en' && !translation) {
+        [translation] = await knex('anime_details')
+          .select('language', 'name', 'overview')
+          .where({
+            animeId: item.id,
+            language: 'en'
+          })
+      }
+
+      item.translation = translation || {}
 
       animes.push(item)
     }

@@ -35,8 +35,11 @@ const getFeed = {
         .where({
           id: item.animeId
         })
-      anime.translations = await knex('anime_details')
-        .select('language', 'name')
+
+      if (!anime) continue
+
+      let [translation] = await knex('anime_details')
+        .select('language', 'name', 'overview')
         .where({
           animeId: item.animeId,
           language: language.length === 2
@@ -44,6 +47,16 @@ const getFeed = {
             : 'en'
         })
 
+      if (language !== 'en' && !translation) {
+        [translation] = await knex('anime_details')
+          .select('language', 'name', 'overview')
+          .where({
+            animeId: item.animeId,
+            language: 'en'
+          })
+      }
+
+      anime.translation = translation || {}
       animes[item.animeId] = anime
     }
 

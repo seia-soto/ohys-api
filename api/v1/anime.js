@@ -25,7 +25,7 @@ const getAnime = {
 
     if (!data) return {}
 
-    data.translations = await knex('anime_details')
+    let [translation] = await knex('anime_details')
       .select('language', 'name', 'overview')
       .where({
         animeId: data.id,
@@ -33,6 +33,18 @@ const getAnime = {
           ? language
           : 'en'
       })
+
+    if (language !== 'en' && !translation) {
+      [translation] = await knex('anime_details')
+        .select('language', 'name', 'overview')
+        .where({
+          animeId: data.id,
+          language: 'en'
+        })
+    }
+
+    data.translation = translation || {}
+
     data.episodes = await knex('episode')
       .select('number', 'resolution', 'filename')
       .where({
