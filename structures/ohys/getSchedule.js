@@ -6,7 +6,7 @@ const debug = require('./debug')
 const days = [
   '월', '화', '수', '목', '금', '토', '일', 'SP',
   '月', '火', '水', '木', '金', '土', '日', 'SP',
-  'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN', 'Unknown'
+  'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN', 'UNK' // NOTE: unknown
 ]
 const dividers = [
   '/', '[', ']'
