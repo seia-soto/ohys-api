@@ -28,6 +28,7 @@ const searchAnimes = {
       .where('name', 'like', term)
       .orWhere('scheduleName', 'like', term)
       .limit(limit)
+    const resultIds = results.map(result => result.id)
 
     const altResults = await knex('anime_details')
       .select('animeId')
@@ -36,7 +37,7 @@ const searchAnimes = {
 
     if (altResults.length) {
       for (let i = 0, l = altResults.length; i < l; i++) {
-        if (!altResults[i].animeId) continue
+        if (!altResults[i].animeId || resultIds.indexOf(altResults[i].animeId) >= 0) continue
 
         const [altResult] = await knex('anime')
           .select(
@@ -49,6 +50,7 @@ const searchAnimes = {
           })
 
         results.push(altResult)
+        resultIds.push(altResult.id)
       }
     }
 
