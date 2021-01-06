@@ -29,6 +29,29 @@ const searchAnimes = {
       .orWhere('scheduleName', 'like', term)
       .limit(limit)
 
+    const altResults = await knex('anime_details')
+      .select('animeId')
+      .where('name', 'like', term)
+      .limit(limit)
+
+    if (altResults.length) {
+      for (let i = 0, l = altResults.length; i < l; i++) {
+        if (!altResults[i].animeId) continue
+
+        const [altResult] = await knex('anime')
+          .select(
+            'id',
+            'name',
+            'posterImage'
+          )
+          .where({
+            id: altResults[i].animeId
+          })
+
+        results.push(altResult)
+      }
+    }
+
     const animes = []
 
     for (let i = 0, l = results.length; i < l; i++) {
