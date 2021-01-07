@@ -12,7 +12,7 @@ module.exports = table => {
   table.integer('year')
   table.integer('quarter')
   table.integer('airingDay')
-  table.time('airingTime')
+  table.string('airingTime')
 
   // NOTE: 3rd parties;
   table.integer('tmdbId')
