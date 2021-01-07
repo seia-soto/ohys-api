@@ -23,6 +23,7 @@ const searchAnimes = {
       .select(
         'id',
         'name',
+        'scheduleName',
         'posterImage'
       )
       .where('name', 'like', term)
@@ -43,6 +44,7 @@ const searchAnimes = {
           .select(
             'id',
             'name',
+            'scheduleName',
             'posterImage'
           )
           .where({
