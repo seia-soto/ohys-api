@@ -56,7 +56,7 @@ module.exports = async opts => {
 
     await knex('anime')
       .update({
-        updatedAt: Date.now(),
+        updatedAt: knex.fn.now(),
         name: details.name,
         network: details.networks[0].name,
         status: details.status,
@@ -74,7 +74,7 @@ module.exports = async opts => {
     id = await knex('anime')
       .returning('id')
       .insert({
-        updatedAt: Date.now(),
+        updatedAt: knex.fn.now(),
         name: details.name,
         scheduleName: name,
         network: details.networks[0].name,
@@ -124,7 +124,7 @@ module.exports = async opts => {
 
       await knex('anime_details')
         .update({
-          updatedAt: Date.now(),
+          updatedAt: knex.fn.now(),
           name: translation.data.name,
           overview: translation.data.overview
         })
@@ -135,7 +135,7 @@ module.exports = async opts => {
       debug('adding translation for anime:', id, '/language:', translation.iso_639_1)
 
       translationsToInsert.push({
-        updatedAt: Date.now(),
+        updatedAt: knex.fn.now(),
         animeId: id,
         language: translation.iso_639_1,
         name: translation.data.name,

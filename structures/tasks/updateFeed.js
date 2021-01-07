@@ -54,7 +54,7 @@ module.exports = async () => {
     animeIds[data.series] = animeIds[data.series] || await updateAnimeOf({ name: data.series })
 
     insertions.push({
-      updatedAt: Date.now(),
+      updatedAt: knex.fn.now(),
       animeId: animeIds[data.series],
       number: data.episode,
       resolution: data.resolution,
