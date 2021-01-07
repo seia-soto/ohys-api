@@ -81,6 +81,12 @@ const searchAnimes = {
 
       item.translation = translation || {}
 
+      item.episodes = await knex('episode')
+        .select('number', 'resolution', 'filename')
+        .where({
+          animeId: item.id
+        })
+
       animes.push(item)
     }
 
