@@ -62,14 +62,15 @@ const searchAnimes = {
       const item = results[i]
 
       // NOTE: Check episodes count;
-      item.episodes = await knex('episode')
-        .select('number', 'resolution', 'filename')
+      const episodes = await knex('episode')
         .where({
           animeId: item.id
         })
         .count('id')
 
-      if (!item.episodes[0]['COUNT(id)']) continue
+      item.episodes = episodes[0]['count(`id`)']
+
+      if (!item.episodes) continue
 
       let [translation] = await knex('anime_details')
         .select('language', 'name', 'overview')
