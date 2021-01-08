@@ -9,6 +9,7 @@ module.exports = table => {
   table.float('number')
   table.string('resolution', 32)
   table.string('filename', 2048)
+  table.string('hash', 256)
 
   return table
 }

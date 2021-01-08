@@ -1,7 +1,9 @@
 const { knex } = require('../database')
+const { sha256 } = require('../hash')
 const ohys = require('../ohys')
 const {
   createLogger,
+  normalizeFilename,
   updateAnimeOf
 } = require('../utils')
 
@@ -24,14 +26,17 @@ module.exports = async () => {
 
   // NOTE: get missing items;
   const [lastItem] = await knex('episode')
-    .select('filename')
+    .select('hash')
     .orderBy('id', 'desc')
     .limit(1)
+  const lastHash = (lastItem || {}).hash
   const missings = []
 
   for (let page = 0, feed = []; (feed = await ohys.getFeed({ page, prettify: 1 })).length; page++) {
     for (let i = 0, l = feed.length; i < l; i++) {
-      if (feed[i].name === (lastItem || {}).filename) {
+      feed[i].hash = sha256(feed[i].name)
+
+      if (feed[i].hash === lastHash) {
         page = -1
 
         break
@@ -58,7 +63,8 @@ module.exports = async () => {
       animeId: animeIds[data.series],
       number: data.episode,
       resolution: data.resolution,
-      filename: item.name
+      filename: normalizeFilename(item.name),
+      hash: item.hash
     })
   }
 
