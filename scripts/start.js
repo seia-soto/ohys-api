@@ -90,4 +90,12 @@ module.exports = (async () => {
       config.tasks.updateFeed
     )
   }
+  // NOTE: remove duplicates;
+  if (config.tasks.removeDuplicates) {
+    schedulers.ohys.duplicates = structures.utils.createCron(
+      '* * * * *',
+      structures.tasks.removeDuplicates,
+      config.tasks.removeDuplicates
+    )
+  }
 })()

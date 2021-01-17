@@ -62,7 +62,7 @@ module.exports = async () => {
       insertions.push({
         updatedAt: knex.fn.now(),
         animeId: animeIds[data.series],
-        number: data.episode,
+        number: Number(String(data.episode).replace(/[^\d]/g, '')),
         resolution: data.resolution,
         filename: normalizeFilename(item.name),
         hash: item.hash
@@ -72,8 +72,12 @@ module.exports = async () => {
     debug('inserting episodes missing on database:', insertions.length)
 
     for (let i = 0, l = insertions.length; i < l; i += 5) {
-      await knex('episode')
-        .insert(insertions.slice(i, i + 5))
+      try {
+        await knex('episode')
+          .insert(insertions.slice(i, i + 5))
+      } catch (error) {
+        debug('error while inserting rows:', error)
+      }
     }
 
     debug('updated feed')

@@ -3,7 +3,7 @@ module.exports = {
     port: 9012
   },
   ohys: {
-    getScheduleInRecentYears: 4,
+    getScheduleInRecentYears: 1,
     getDataOfScheduleIn: 1000 * 60 * 60 * 24 // NOTE: 1 day
   },
   data: {
@@ -11,14 +11,19 @@ module.exports = {
     torrents: './.data/torrents'
   },
   database: {
-    client: 'sqlite3',
+    client: 'mysql2',
     connection: {
-      filename: './.data/data.db',
-      timezone: 'UTC'
+      host: 'localhost',
+      user: 'root',
+      database: ''
     },
     useNullAsDefault: true
   },
   tasks: {
+    removeDuplicates: {
+      useFirstRun: 1,
+      waitFirstRun: 1
+    },
     updateSchedule: {
       useFirstRun: 1,
       waitFirstRun: 1
