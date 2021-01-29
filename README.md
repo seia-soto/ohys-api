@@ -4,27 +4,13 @@
 
 Ohys-API is a project to redistribute the anime metadata of Ohys-Raws.
 
-> This project is using the TMDb API to approach anime metadata.
-
 ## Table of Contents
 
-- [Scripts](#scripts)
 - [Development](#development)
   - [Environment](#environment)
-  - [API](#api) (as module)
+- [API](#api) (as module)
 
 ----
-
-# Scripts
-
-## `yarn start`
-
-Start the application with logging only important messages.
-
-## `yarn debug`
-
-Start the application with logging all messages even from deps.
-This project is using [debug](https://www.npmjs.com/package/debug) package to log.
 
 # Development
 
@@ -43,7 +29,7 @@ npm i git+https://github.com/Seia-Soto/ohys-api.git
 ```
 
 ```js
-const { ohys } = require('Seia-Soto/ohys-api')
+const ohys = require('ohys-api')
 ```
 
 ## ohys
@@ -84,9 +70,6 @@ getFeed({
 
 Query the schedule file with regular expression and heuristic search logic of title which can parse almost everything. (largest coverage)
 
-> **Warning**
-> Using __only__ `name.promised` is highly recommended, I am working on to resolve invalid name detection.
-
 ```js
 const { getSchedulePattern } = ohys
 
@@ -107,12 +90,7 @@ getSchedulePattern({
     day: 0, // NOTE: '7' is special.
     date: '00/00',
     time: '00:00',
-    name: {
-      promised: '...', // NOTE: (optional) You need to check this(`name.promised`) value to check if the value of title is present.
-      English: '...', // NOTE: (optional)
-      Korean: '...', // NOTE: (optional)
-      Japanese: '...' // NOTE: (optional)
-    },
+    name: '...', // NOTE: (optional) You need to check this(`name.promised`) value to check if the value of title is present.
     comment: '...',
     original: '...'
   }

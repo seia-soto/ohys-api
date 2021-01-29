@@ -1,26 +1,13 @@
 {
   "name": "ohys-api",
-  "version": "3.1.0",
-  "main": "index.js",
+  "version": "4.0.0",
+  "main": "src/index.js",
   "repository": "https://github.com/Seia-Soto/ohys-api.git",
   "author": "Seia-Soto <seia@outlook.kr>",
   "license": "MIT",
-  "scripts": {
-    "start": "cross-env DEBUG=ohys* node scripts/start",
-    "start:api": "cross-env DEBUG=ohys* API_ONLY=1 node scripts/start",
-    "debug": "cross-env DEBUG=* node scripts/start",
-    "debug:api": "cross-env DEBUG=* API_ONLY=1 node scripts/start"
-  },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.3",
-    "cross-env": "^7.0.2",
     "debug": "^4.1.1",
-    "fastify": "^3.9.1",
-    "fastify-cors": "^5.1.0",
-    "knex": "^0.21.12",
-    "mysql2": "^2.2.5",
     "node-fetch": "^2.6.1",
-    "node-schedule": "^1.3.2",
     "qs": "^6.9.4"
   },
   "devDependencies": {

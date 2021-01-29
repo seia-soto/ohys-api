@@ -14,17 +14,5 @@ module.exports = {
   },
   parserOptions: {
     ecmaVersion: 2018
-  },
-  rules: {
-    indent: [
-      'error',
-      2,
-      {
-        SwitchCase: 1,
-        VariableDeclarator: 'first'
-      }
-    ],
-    'no-extend-native': 0, // NOTE: DO NOT OVERRIDE ORIGINAL FUNCTIONS.
-    'no-template-curly-in-string': 0 // NOTE: USE BIND FUNCTION INSTEAD.
   }
 }

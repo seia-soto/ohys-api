@@ -75,8 +75,8 @@ module.exports = async opts => {
       }
     }
 
-    const title = {}
     let pruned = (' ' + line).slice(1)
+    let title
     let comment
     let date
     let time
@@ -113,19 +113,8 @@ module.exports = async opts => {
           const possible = token.match(/\d{1,2}\/\d{1,2}/) || []
 
           date = possible[0]
-        } else if (token && token.match(/[a-zA-Z가-힣一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤]/u)) {
-          if (!title.promised) {
-            title.promised = token
-          }
-          if (!title.English && token.match(/[a-z]/i)) {
-            title.English = token
-          }
-          if (!title.Korean && token.match(/[가-힣]/ui)) {
-            title.Korean = token
-          }
-          if (!title.Japanese && token.match(/[一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤]/ui)) {
-            title.Japanese = token
-          }
+        } else if (token && token.match(/[a-zA-Z가-힣一-龠ぁ-ゔァ-ヴーａ-ｚＡ-Ｚ０-９々〆〤]/u) && !title) {
+          title = token
         }
       }
     }
