@@ -1,0 +1,7 @@
+/built/tsconfig.tsbuildinfo
+/source
+/test
+/.eslintrc.cjs
+/.pnpm-lock.yaml
+/.swcrc
+/.swcrc.production
