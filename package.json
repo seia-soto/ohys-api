@@ -1,21 +1,45 @@
 {
   "name": "ohys-api",
-  "version": "4.0.0",
-  "main": "src/index.js",
-  "repository": "https://github.com/Seia-Soto/ohys-api.git",
-  "author": "Seia-Soto <seia@outlook.kr>",
-  "license": "MIT",
-  "dependencies": {
-    "debug": "^4.1.1",
-    "node-fetch": "^2.6.1",
-    "qs": "^6.9.4"
+  "version": "5.0.0",
+  "description": "Ohys-Raws data refiner",
+  "main": "built/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm build:clean && pnpm build:source && pnpm build:type",
+    "build:dev": "swc ./source --config-file .swcrc -d ./built",
+    "build:clean": "rm -r ./built",
+    "build:source": "swc ./source --config-file .swcrc.production -d ./built",
+    "build:type": "tsc --declaration --emitDeclarationOnly --outDir ./built",
+    "test": "ava"
+  },
+  "keywords": [
+    "ohys",
+    "raws",
+    "parser"
+  ],
+  "author": "HoJeong Go <seia@outlook.kr>",
+  "license": "ISC",
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "nodeArguments": [
+      "--loader=ts-node/esm",
+      "--experimental-specifier-resolution=node"
+    ]
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.20.0",
-    "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.218",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "ava": "^4.3.1",
+    "eslint": "^8.20.0",
+    "eslint-config-xo": "^0.41.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "got": "^12.2.0"
   }
 }
