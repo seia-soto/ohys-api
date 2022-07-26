@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "build": "pnpm build:clean && pnpm build:source && pnpm build:type",
-    "build:dev": "swc ./source --config-file .swcrc -d ./built",
-    "build:clean": "rm -r ./built",
-    "build:source": "swc ./source --config-file .swcrc.production -d ./built",
+    "build:dev": "swc ./source --config-file development.swcrc -d ./built",
+    "build:clean": "rm -rf ./built",
+    "build:source": "swc ./source --config-file production.swcrc -d ./built",
     "build:type": "tsc --declaration --emitDeclarationOnly --outDir ./built",
     "test": "ava"
   },

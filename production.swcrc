@@ -8,7 +8,13 @@
     },
     "target": "es2020",
     "loose": false,
-    "externalHelpers": false
+    "externalHelpers": false,
+    "minify": {
+      "compress": {
+        "unused": true
+      },
+      "mangle": true
+    }
   },
   "minify": true
 }
